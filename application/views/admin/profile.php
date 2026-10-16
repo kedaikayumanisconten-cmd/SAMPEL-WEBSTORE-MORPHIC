@@ -98,18 +98,18 @@ $has_username = ! empty($account['username']);
 
 			<div class="form-group">
 				<label for="current_password">Password Saat Ini <span class="req">*</span></label>
-				<input type="password" id="current_password" name="current_password" placeholder="••••••••" required autocomplete="current-password">
+				<?php $this->load->view('partials/password_field', array('password_id' => 'current_password', 'password_name' => 'current_password', 'password_placeholder' => '••••••••', 'password_autocomplete' => 'current-password')); ?>
 			</div>
 
 			<div class="form-row">
 				<div class="form-group">
 					<label for="new_password">Password Baru <span class="req">*</span></label>
-					<input type="password" id="new_password" name="new_password" placeholder="Minimal 8 karakter" required autocomplete="new-password">
+					<?php $this->load->view('partials/password_field', array('password_id' => 'new_password', 'password_name' => 'new_password', 'password_placeholder' => 'Minimal 8 karakter', 'password_autocomplete' => 'new-password')); ?>
 				</div>
 
 				<div class="form-group">
 					<label for="new_password_confirm">Ulangi Password Baru <span class="req">*</span></label>
-					<input type="password" id="new_password_confirm" name="new_password_confirm" placeholder="Ulangi password baru" required autocomplete="new-password">
+					<?php $this->load->view('partials/password_field', array('password_id' => 'new_password_confirm', 'password_name' => 'new_password_confirm', 'password_placeholder' => 'Ulangi password baru', 'password_autocomplete' => 'new-password')); ?>
 				</div>
 			</div>
 

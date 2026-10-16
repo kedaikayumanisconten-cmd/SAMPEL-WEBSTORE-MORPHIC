@@ -23,6 +23,16 @@ $is_active = function ($needle) {
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
 	<link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?>">
+	<script>
+		(function () {
+			try {
+				var theme = localStorage.getItem('morphic-theme');
+				if (theme && theme !== 'morphic') {
+					document.documentElement.setAttribute('data-theme', theme);
+				}
+			} catch (error) {}
+		})();
+	</script>
 </head>
 <body class="admin-body">
 	<div class="admin-shell">
@@ -71,6 +81,7 @@ $is_active = function ($needle) {
 				<button class="btn-icon admin-sidebar-toggle" type="button" data-sidebar-toggle aria-label="Buka menu admin">&#9776;</button>
 				<h1><?php echo html_escape(isset($content_title) ? $content_title : $page_title); ?></h1>
 				<span class="spacer"></span>
+				<?php $this->load->view('layouts/partials/theme_picker'); ?>
 				<a class="badge badge-accent" href="<?php echo site_url('admin/profile'); ?>" title="Pengaturan akun"><?php echo html_escape($admin_user['full_name']); ?></a>
 			</header>
 

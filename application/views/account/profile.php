@@ -53,18 +53,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 			<div class="form-group">
 				<label for="current_password">Password Saat Ini <span class="req">*</span></label>
-				<input type="password" id="current_password" name="current_password" required>
+				<?php $this->load->view('partials/password_field', array('password_id' => 'current_password', 'password_name' => 'current_password', 'password_autocomplete' => 'current-password')); ?>
 			</div>
 
 			<div class="form-group">
 				<label for="new_password">Password Baru <span class="req">*</span></label>
-				<input type="password" id="new_password" name="new_password" required>
+				<?php $this->load->view('partials/password_field', array('password_id' => 'new_password', 'password_name' => 'new_password', 'password_autocomplete' => 'new-password')); ?>
 				<div class="form-hint">Minimal 8 karakter. Gunakan kombinasi huruf, angka, dan simbol.</div>
 			</div>
 
 			<div class="form-group">
 				<label for="new_password_confirm">Ulangi Password Baru <span class="req">*</span></label>
-				<input type="password" id="new_password_confirm" name="new_password_confirm" required>
+				<?php $this->load->view('partials/password_field', array('password_id' => 'new_password_confirm', 'password_name' => 'new_password_confirm', 'password_autocomplete' => 'new-password')); ?>
 			</div>
 
 			<button type="submit" class="btn btn-primary">Perbarui Password</button>

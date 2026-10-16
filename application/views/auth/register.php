@@ -31,12 +31,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="form-row">
 				<div class="form-group">
 					<label for="password">Password <span class="req">*</span></label>
-					<input type="password" id="password" name="password" placeholder="Minimal 8 karakter" required>
+					<?php $this->load->view('partials/password_field', array('password_placeholder' => 'Minimal 8 karakter')); ?>
 				</div>
 
 				<div class="form-group">
 					<label for="password_confirm">Ulangi Password <span class="req">*</span></label>
-					<input type="password" id="password_confirm" name="password_confirm" placeholder="Ulangi password" required>
+					<?php $this->load->view('partials/password_field', array(
+						'password_id'          => 'password_confirm',
+						'password_name'        => 'password_confirm',
+						'password_placeholder' => 'Ulangi password',
+					)); ?>
 				</div>
 			</div>
 

@@ -256,6 +256,118 @@
 		});
 	}
 
+	/**
+	 * Theme picker: persists the chosen palette and reflects it on demand.
+	 */
+	function initThemePicker() {
+		var pickers = document.querySelectorAll('[data-theme-picker]');
+
+		if (!pickers.length) {
+			return;
+		}
+
+		var root = document.documentElement;
+		var THEMES = ['morphic', 'midnight', 'emerald', 'royal', 'rose', 'ocean'];
+
+		function currentTheme() {
+			var active = root.getAttribute('data-theme');
+
+			return THEMES.indexOf(active) !== -1 ? active : 'morphic';
+		}
+
+		function applyTheme(theme) {
+			if (theme === 'morphic') {
+				root.removeAttribute('data-theme');
+			} else {
+				root.setAttribute('data-theme', theme);
+			}
+
+			try {
+				if (theme === 'morphic') {
+					localStorage.removeItem('morphic-theme');
+				} else {
+					localStorage.setItem('morphic-theme', theme);
+				}
+			} catch (error) {
+				// Storage unavailable (private mode) - theme still applies for the session.
+			}
+		}
+
+		function syncActive() {
+			var theme = currentTheme();
+
+			document.querySelectorAll('.theme-option').forEach(function (option) {
+				var isActive = option.getAttribute('data-theme-value') === theme;
+				option.classList.toggle('is-active', isActive);
+				option.setAttribute('aria-checked', isActive ? 'true' : 'false');
+			});
+		}
+
+		pickers.forEach(function (picker) {
+			var toggle = picker.querySelector('[data-theme-toggle]');
+			var menu = picker.querySelector('[data-theme-menu]');
+
+			if (!toggle || !menu) {
+				return;
+			}
+
+			function close() {
+				menu.classList.remove('is-open');
+				toggle.setAttribute('aria-expanded', 'false');
+			}
+
+			toggle.addEventListener('click', function (event) {
+				event.stopPropagation();
+				var open = menu.classList.toggle('is-open');
+				toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+			});
+
+			menu.querySelectorAll('.theme-option').forEach(function (option) {
+				option.addEventListener('click', function () {
+					applyTheme(option.getAttribute('data-theme-value'));
+					syncActive();
+					close();
+				});
+			});
+
+			document.addEventListener('click', function (event) {
+				if (menu.classList.contains('is-open') && !picker.contains(event.target)) {
+					close();
+				}
+			});
+
+			document.addEventListener('keydown', function (event) {
+				if (event.key === 'Escape' && menu.classList.contains('is-open')) {
+					close();
+					toggle.focus();
+				}
+			});
+		});
+
+		syncActive();
+	}
+
+	/**
+	 * Reveal/hide the value of password fields (login & registration).
+	 */
+	function initPasswordToggles() {
+		document.querySelectorAll('[data-password-toggle]').forEach(function (button) {
+			var field = document.getElementById(button.getAttribute('data-password-toggle'));
+
+			if (!field) {
+				return;
+			}
+
+			button.addEventListener('click', function () {
+				var reveal = field.type === 'password';
+				field.type = reveal ? 'text' : 'password';
+				button.classList.toggle('is-visible', reveal);
+				button.setAttribute('aria-pressed', reveal ? 'true' : 'false');
+				button.setAttribute('aria-label', reveal ? 'Sembunyikan password' : 'Tampilkan password');
+			});
+		});
+	}
+
 	document.addEventListener('DOMContentLoaded', function () {
 		initNavToggle();
 		initSidebarToggle();
@@ -265,5 +377,7 @@
 		initFilePreviews();
 		initSlugField();
 		initSliders();
+		initThemePicker();
+		initPasswordToggles();
 	});
 })();

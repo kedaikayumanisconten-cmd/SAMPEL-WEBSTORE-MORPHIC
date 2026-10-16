@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 			<div class="form-group">
 				<label for="password">Password <span class="req">*</span></label>
-				<input type="password" id="password" name="password" placeholder="••••••••" required>
+				<?php $this->load->view('partials/password_field', array('password_placeholder' => '••••••••')); ?>
 			</div>
 
 			<button type="submit" class="btn btn-primary btn-lg btn-block">Masuk</button>

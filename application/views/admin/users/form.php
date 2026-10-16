@@ -106,12 +106,12 @@ $temp_password = $this->session->flashdata('temp_password');
 
 				<div class="form-group">
 					<label for="password">Password Baru</label>
-					<input type="password" id="password" name="password" placeholder="Minimal 8 karakter" autocomplete="new-password">
+					<?php $this->load->view('partials/password_field', array('password_placeholder' => 'Minimal 8 karakter', 'password_autocomplete' => 'new-password', 'password_required' => FALSE)); ?>
 				</div>
 
 				<div class="form-group">
 					<label for="password_confirm">Ulangi Password Baru</label>
-					<input type="password" id="password_confirm" name="password_confirm" placeholder="Ulangi password baru" autocomplete="new-password">
+					<?php $this->load->view('partials/password_field', array('password_id' => 'password_confirm', 'password_name' => 'password_confirm', 'password_placeholder' => 'Ulangi password baru', 'password_autocomplete' => 'new-password', 'password_required' => FALSE)); ?>
 				</div>
 
 				<?php if ($is_self): ?>

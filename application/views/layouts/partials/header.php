@@ -11,6 +11,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
 	<link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?>">
+	<script>
+		(function () {
+			try {
+				var theme = localStorage.getItem('morphic-theme');
+				if (theme && theme !== 'morphic') {
+					document.documentElement.setAttribute('data-theme', theme);
+				}
+			} catch (error) {}
+		})();
+	</script>
 </head>
 <body>
 	<header class="site-header">
@@ -40,6 +50,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<form class="header-search" action="<?php echo site_url('search'); ?>" method="get" role="search">
 						<input type="search" name="q" placeholder="Cari plugin, LUT, preset&hellip;" value="<?php echo html_escape($this->input->get('q', TRUE)); ?>" aria-label="Cari produk">
 					</form>
+
+					<?php $this->load->view('layouts/partials/theme_picker'); ?>
 
 					<a class="btn btn-ghost btn-sm" href="<?php echo site_url('cart'); ?>">
 						Keranjang

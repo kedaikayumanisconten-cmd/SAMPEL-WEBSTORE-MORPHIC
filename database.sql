@@ -58,6 +58,8 @@ CREATE TABLE `categories` (
     `slug` varchar(120) NOT NULL,
     `target_group` enum('creator','musician','both') NOT NULL DEFAULT 'both',
     `description` text DEFAULT NULL,
+    `image_url` varchar(255) DEFAULT NULL COMMENT 'Cover image: local path (assets/uploads/...) or absolute external URL (e.g. Unsplash)',
+    `image_credit` varchar(255) DEFAULT NULL COMMENT 'Optional attribution shown under the category cover, e.g. Photo by Jane Doe on Unsplash',
     `is_active` tinyint(1) NOT NULL DEFAULT 1,
     `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -229,12 +231,12 @@ INSERT INTO `users` (`id`, `full_name`, `username`, `email`, `password_hash`, `r
 -- ----------------------------------------------------------------------------
 -- Seed 2: Categories (Creator & Musician)
 -- ----------------------------------------------------------------------------
-INSERT INTO `categories` (`id`, `name`, `slug`, `target_group`, `description`, `is_active`) VALUES
-(1, 'VST Plugins & Virtual Instruments', 'vst-plugins-instruments', 'musician', 'Synthesizer, efek mixing/mastering, dan instrumen virtual untuk DAW favorit Anda.', 1),
-(2, 'Sample Packs & Synth Presets', 'sample-packs-presets', 'musician', 'Koleksi loop audio royalty-free, drum one-shots, dan preset untuk Serum, Vital, serta Massive.', 1),
-(3, 'Video Editing Plugins & Transitions', 'video-plugins-transitions', 'creator', 'Plugin transisi mulus, motion graphics template, dan efek visual untuk Premiere Pro, After Effects, & DaVinci Resolve.', 1),
-(4, 'Cinematic LUTs & Color Grading', 'cinematic-luts-color', 'creator', 'Paket Color Grading LUTs (.cube) profesional untuk kamera Sony, Canon, RED, dan profil Log.', 1),
-(5, 'Streaming & Audio Utility Tools', 'streaming-audio-utilities', 'both', 'Software pendukung live streaming, routing audio virtual, dan noise suppression untuk kreator & musisi.', 1);
+INSERT INTO `categories` (`id`, `name`, `slug`, `target_group`, `description`, `image_url`, `image_credit`, `is_active`) VALUES
+(1, 'VST Plugins & Virtual Instruments', 'vst-plugins-instruments', 'musician', 'Synthesizer, efek mixing/mastering, dan instrumen virtual untuk DAW favorit Anda.', 'https://images.unsplash.com/photo-1626379953822-baec19c3accd?auto=format&fit=crop&w=1200&q=80', 'Photo from Unsplash', 1),
+(2, 'Sample Packs & Synth Presets', 'sample-packs-presets', 'musician', 'Koleksi loop audio royalty-free, drum one-shots, dan preset untuk Serum, Vital, serta Massive.', 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?auto=format&fit=crop&w=1200&q=80', 'Photo from Unsplash', 1),
+(3, 'Video Editing Plugins & Transitions', 'video-plugins-transitions', 'creator', 'Plugin transisi mulus, motion graphics template, dan efek visual untuk Premiere Pro, After Effects, & DaVinci Resolve.', 'https://images.unsplash.com/photo-1571330735066-03aaa9429d89?auto=format&fit=crop&w=1200&q=80', 'Photo from Unsplash', 1),
+(4, 'Cinematic LUTs & Color Grading', 'cinematic-luts-color', 'creator', 'Paket Color Grading LUTs (.cube) profesional untuk kamera Sony, Canon, RED, dan profil Log.', 'https://images.unsplash.com/photo-1533158326339-7f3cf2404354?auto=format&fit=crop&w=1200&q=80', 'Photo from Unsplash', 1),
+(5, 'Streaming & Audio Utility Tools', 'streaming-audio-utilities', 'both', 'Software pendukung live streaming, routing audio virtual, dan noise suppression untuk kreator & musisi.', 'https://images.unsplash.com/photo-1596558450268-9c27524ba856?auto=format&fit=crop&w=1200&q=80', 'Photo from Unsplash', 1);
 
 -- ----------------------------------------------------------------------------
 -- Seed 3: Products (6 Produk: 3 Musician, 2 Creator, 1 Hybrid)
@@ -242,7 +244,7 @@ INSERT INTO `categories` (`id`, `name`, `slug`, `target_group`, `description`, `
 INSERT INTO `products` (
     `id`, `category_id`, `title`, `slug`, `short_description`, `description`,
     `price`, `version`, `os_support`, `file_format`, `file_size_mb`, `system_requirements`,
-    `thumbnail_url`, `preview_type`, `preview_url`, `file_path`,
+    `thumbnail_url`, `thumbnail_credit`, `preview_type`, `preview_url`, `file_path`,
     `requires_license_key`, `is_featured`, `is_active`
 ) VALUES
 -- Produk Musisi 1
@@ -252,7 +254,7 @@ INSERT INTO `products` (
     'MORPH-SYNTH adalah plugin instrumen virtual generasi baru untuk produser musik elektronik, synthwave, dan film scoring. Dilengkapi dengan dual oscillator wavetable, sub-bass generator, serta modulasi LFO drag-and-drop yang intuitif.',
     450000.00, '2.1.0', 'both', 'VST3, AU, AAX (64-bit)', 340.50,
     'Windows 10/11 (64-bit) atau macOS 12+ (Intel & Apple Silicon M1/M2/M3). RAM minimal 8GB, mendukung Ableton Live, FL Studio, Logic Pro, Cubase.',
-    'assets/uploads/thumbnails/morph-synth.jpg', 'audio', 'assets/uploads/previews/morph-synth-demo.mp3',
+    'https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=1200&q=80', 'Photo from Unsplash', 'audio', 'assets/uploads/previews/morph-synth-demo.mp3',
     'storage/private_products/morph_synth_v2_1_0_installer.zip', 1, 1, 1
 ),
 -- Produk Musisi 2
@@ -262,7 +264,7 @@ INSERT INTO `products` (
     'Ciptakan ruang akustik raksasa mulai dari ruangan studio kecil hingga atmosfer sinematik tak terbatas. AetherVerb Pro memiliki fitur ducking otomatis sehingga ekor reverb tidak membuat frekuensi utama menjadi keruh (muddy).',
     320000.00, '1.4.2', 'both', 'VST3, AU (64-bit)', 125.00,
     'Windows 10+ atau macOS 11+. CPU Dual Core 2.5GHz+, RAM 4GB.',
-    'assets/uploads/thumbnails/aetherverb-pro.jpg', 'audio', 'assets/uploads/previews/aetherverb-demo.mp3',
+    'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=1200&q=80', 'Photo from Unsplash', 'audio', 'assets/uploads/previews/aetherverb-demo.mp3',
     'storage/private_products/aetherverb_pro_v1_4_2.zip', 1, 1, 1
 ),
 -- Produk Musisi 3
@@ -272,7 +274,7 @@ INSERT INTO `products` (
     'Paket suara wajib untuk produser musik elektronik, game soundtrack, dan trailer action. Semua file WAV sudah memiliki label BPM dan Key serta 100% Royalty-Free untuk rilisan komersial.',
     185000.00, '1.0.0', 'cross_platform', 'WAV 24-bit, .fxp (Serum Presets), MIDI', 890.00,
     'Membutuhkan Xfer Serum v1.36+ untuk membuka file preset. File WAV dan MIDI dapat digunakan di semua DAW.',
-    'assets/uploads/thumbnails/cyberpunk-odyssey.jpg', 'audio', 'assets/uploads/previews/cyberpunk-odyssey-demo.mp3',
+    'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=1200&q=80', 'Photo from Unsplash', 'audio', 'assets/uploads/previews/cyberpunk-odyssey-demo.mp3',
     'storage/private_products/cyberpunk_odyssey_pack.zip', 0, 0, 1
 ),
 -- Produk Creator 1
@@ -282,7 +284,7 @@ INSERT INTO `products` (
     'Hemat waktu editing hingga 70% dengan KineticFlow. Mendukung resolusi hingga 4K/8K, frame rate fleksibel, dan dilengkapi sound effects (SFX) bawaan di setiap transisi.',
     295000.00, '3.0.1', 'both', '.prfpset, .mogrt, .drfx', 620.00,
     'Adobe Premiere Pro CC 2022+ atau DaVinci Resolve 18/19 (Free & Studio).',
-    'assets/uploads/thumbnails/kineticflow-transitions.jpg', 'video', 'assets/uploads/previews/kineticflow-preview.mp4',
+    'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1200&q=80', 'Photo from Unsplash', 'video', 'assets/uploads/previews/kineticflow-preview.mp4',
     'storage/private_products/kineticflow_v3_0_1_bundle.zip', 1, 1, 1
 ),
 -- Produk Creator 2
@@ -292,7 +294,7 @@ INSERT INTO `products` (
     'Dirancang oleh colorist profesional untuk menghasilkan tone warna film box office modern. Termasuk folder khusus untuk konversi Log-to-Rec709 serta folder creative look (Teal & Orange, Cyberpunk, Vintage Kodak, Moody Matte).',
     175000.00, '1.2.0', 'cross_platform', '.cube (33x33x33 Grid)', 85.40,
     'Kompatibel dengan Premiere Pro, DaVinci Resolve, Final Cut Pro X, CapCut Desktop, Sony Vegas, dan monitor eksternal Atomos.',
-    'assets/uploads/thumbnails/neonoir-luts.jpg', 'image', 'assets/uploads/previews/neonoir-before-after.jpg',
+    'https://images.unsplash.com/photo-1601506521937-0121a7fc2a6b?auto=format&fit=crop&w=1200&q=80', 'Photo from Unsplash', 'image', 'assets/uploads/previews/neonoir-before-after.jpg',
     'storage/private_products/neonoir_luts_v1_2.zip', 0, 1, 1
 ),
 -- Produk Creator & Musisi (Both)
@@ -302,7 +304,7 @@ INSERT INTO `products` (
     'Hapus suara kipas PC, AC, ketikan keyboard mekanikal, dan pantulan gema ruangan secara real-time dengan latensi ultra-rendah (< 5ms). Bekerja langsung di OBS Studio, Discord, maupun di dalam DAW.',
     390000.00, '1.1.0', 'windows', 'Standalone (.exe) & VST3 (64-bit)', 210.00,
     'Windows 10/11 (64-bit), CPU Intel Core i5 Gen 8 / Ryzen 5 3000 ke atas, RAM 8GB.',
-    'assets/uploads/thumbnails/voxclean-ai.jpg', 'audio', 'assets/uploads/previews/voxclean-demo.mp3',
+    'https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=1200&q=80', 'Photo from Unsplash', 'audio', 'assets/uploads/previews/voxclean-demo.mp3',
     'storage/private_products/voxclean_ai_win_v1_1_0.zip', 1, 0, 1
 );
 

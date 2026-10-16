@@ -30,6 +30,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<table class="data">
 				<thead>
 					<tr>
+						<th></th>
 						<th>Nama</th>
 						<th>Slug</th>
 						<th>Target Audiens</th>
@@ -40,7 +41,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</thead>
 				<tbody>
 					<?php foreach ($categories as $category): ?>
+						<?php $image = category_image_url($category['image_url']); ?>
 						<tr>
+							<td>
+								<div class="cart-line-thumb" style="width:64px;height:44px">
+									<?php if ($image): ?>
+										<img src="<?php echo html_escape($image); ?>" alt="">
+									<?php else: ?>
+										<?php echo html_escape(initials_of($category['name'])); ?>
+									<?php endif; ?>
+								</div>
+							</td>
 							<td>
 								<div class="cell-title"><?php echo html_escape($category['name']); ?></div>
 								<div class="cell-sub"><?php echo html_escape(excerpt($category['description'], 70)); ?></div>

@@ -120,6 +120,8 @@ class Categories extends Admin_Controller
 		$this->form_validation->set_rules('slug', 'Slug', 'trim|max_length[120]');
 		$this->form_validation->set_rules('target_group', 'Target Audiens', 'required|in_list[creator,musician,both]');
 		$this->form_validation->set_rules('description', 'Deskripsi', 'trim|max_length[1000]');
+		$this->form_validation->set_rules('image_url', 'URL Gambar', 'trim|max_length[255]');
+		$this->form_validation->set_rules('image_credit', 'Kredit Gambar', 'trim|max_length[255]');
 	}
 
 	protected function collect_input()
@@ -129,15 +131,21 @@ class Categories extends Admin_Controller
 			'slug'         => (string) $this->input->post('slug', TRUE),
 			'target_group' => (string) $this->input->post('target_group', TRUE),
 			'description'  => (string) $this->input->post('description', TRUE),
+			'image_url'    => (string) $this->input->post('image_url', TRUE),
+			'image_credit' => (string) $this->input->post('image_credit', TRUE),
 			'is_active'    => (bool) $this->input->post('is_active'),
 		);
 	}
 
 	protected function render_form($category)
 	{
+		$keywords = $this->config->item('unsplash_keywords');
+
 		$this->render('admin/categories/form', array(
-			'category' => $category,
-			'is_edit'  => $category !== NULL,
+			'category'          => $category,
+			'is_edit'           => $category !== NULL,
+			'quick_picks'       => $this->config->item('unsplash_quick_picks'),
+			'unsplash_keywords' => is_array($keywords) ? $keywords : array(),
 		), $category ? 'Edit: '.$category['name'] : 'Tambah Kategori');
 	}
 }

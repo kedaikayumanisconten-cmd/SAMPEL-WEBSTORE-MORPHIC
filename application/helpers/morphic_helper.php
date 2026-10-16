@@ -136,6 +136,23 @@ if ( ! function_exists('product_image_url'))
 	}
 }
 
+if ( ! function_exists('category_image_url'))
+{
+	/**
+	 * Resolve a category cover reference into a renderable URL.
+	 *
+	 * Same rules as product_image_url(): a repository relative asset path or
+	 * an absolute external URL (e.g. an Unsplash image address).
+	 *
+	 * @param  string|null $value
+	 * @return string|null NULL when there is nothing usable to render.
+	 */
+	function category_image_url($value)
+	{
+		return product_image_url($value);
+	}
+}
+
 if ( ! function_exists('preview_media_url'))
 {
 	/**

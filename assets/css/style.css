@@ -312,6 +312,45 @@ small { font-size: .82em; }
 .thumb-badges { position: absolute; top: 10px; left: 10px; right: 10px; display: flex; gap: 6px; flex-wrap: wrap; }
 .thumb-audience { position: absolute; bottom: 10px; right: 10px; }
 
+/* Category cards (home) */
+.category-card {
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+.category-card:hover { transform: translateY(-4px); border-color: rgba(124, 92, 255, .6); box-shadow: var(--shadow); }
+.category-cover {
+	position: relative;
+	aspect-ratio: 16 / 9;
+	background: linear-gradient(135deg, #2a2f5e, #151834);
+	overflow: hidden;
+}
+.category-cover img { width: 100%; height: 100%; object-fit: cover; }
+.category-body { padding: 16px 20px 20px; }
+
+/* Category banner (category listing page) */
+.category-banner {
+	position: relative;
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	overflow: hidden;
+	min-height: 190px;
+	display: flex;
+	align-items: flex-end;
+	background: linear-gradient(135deg, #2a2f5e, #151834);
+}
+.category-banner img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; }
+.category-banner-body {
+	position: relative;
+	padding: 22px 24px;
+	width: 100%;
+	background: linear-gradient(180deg, transparent, rgba(11, 13, 23, .82));
+}
+.category-banner-body h2 { font-size: clamp(1.3rem, 2.6vw, 1.9rem); }
+.category-credit { margin-top: 6px; font-size: .72rem; color: var(--text-dim); }
+
 .product-body { padding: 16px 18px 18px; display: flex; flex-direction: column; flex: 1; }
 .product-cat { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--accent-2); }
 .product-title { font-size: 1rem; margin: .5rem 0 .4rem; }

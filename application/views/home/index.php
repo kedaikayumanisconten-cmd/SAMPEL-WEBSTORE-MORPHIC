@@ -59,15 +59,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		<div class="grid grid-3">
 			<?php foreach ($categories as $category): ?>
-				<a class="card" href="<?php echo site_url('category/'.$category['slug']); ?>">
-					<div class="row-between mb-1">
-						<span class="badge <?php echo $category['target_group'] === 'musician' ? 'badge-accent' : ($category['target_group'] === 'creator' ? 'badge-success' : 'badge-muted'); ?>">
-							<?php echo html_escape(target_group_label($category['target_group'])); ?>
-						</span>
-						<span class="badge badge-muted"><?php echo (int) $category['product_count']; ?> produk</span>
+				<?php $cover = category_image_url($category['image_url']); ?>
+				<a class="card category-card" href="<?php echo site_url('category/'.$category['slug']); ?>">
+					<?php if ($cover): ?>
+						<div class="category-cover">
+							<img src="<?php echo html_escape($cover); ?>" alt="<?php echo html_escape($category['name']); ?>" loading="lazy">
+							<span class="badge badge-success thumb-audience"><?php echo (int) $category['product_count']; ?> produk</span>
+						</div>
+					<?php endif; ?>
+
+					<div class="category-body">
+						<div class="row-between mb-1">
+							<span class="badge <?php echo $category['target_group'] === 'musician' ? 'badge-accent' : ($category['target_group'] === 'creator' ? 'badge-success' : 'badge-muted'); ?>">
+								<?php echo html_escape(target_group_label($category['target_group'])); ?>
+							</span>
+							<?php if ( ! $cover): ?>
+								<span class="badge badge-muted"><?php echo (int) $category['product_count']; ?> produk</span>
+							<?php endif; ?>
+						</div>
+						<h3 class="card-title"><?php echo html_escape($category['name']); ?></h3>
+						<p class="text-muted mb-0"><small><?php echo html_escape(excerpt($category['description'], 110)); ?></small></p>
 					</div>
-					<h3 class="card-title"><?php echo html_escape($category['name']); ?></h3>
-					<p class="text-muted mb-0"><small><?php echo html_escape(excerpt($category['description'], 110)); ?></small></p>
 				</a>
 			<?php endforeach; ?>
 		</div>

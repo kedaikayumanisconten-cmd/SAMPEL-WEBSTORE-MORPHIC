@@ -59,12 +59,27 @@ $sorts = array(
 	<span><?php echo html_escape($page_heading); ?></span>
 </div>
 
-<div class="row-between mb-3">
-	<div>
-		<h2 class="mb-1"><?php echo html_escape($page_heading); ?></h2>
-		<p class="text-muted mb-0"><?php echo html_escape($page_subheading); ?></p>
+<?php $category_cover = $active_category ? category_image_url($active_category['image_url']) : NULL; ?>
+
+<?php if ($category_cover): ?>
+	<div class="category-banner mb-3">
+		<img src="<?php echo html_escape($category_cover); ?>" alt="<?php echo html_escape($page_heading); ?>">
+		<div class="category-banner-body">
+			<h2 class="mb-1"><?php echo html_escape($page_heading); ?></h2>
+			<p class="text-muted mb-0"><?php echo html_escape($page_subheading); ?></p>
+			<?php if ( ! empty($active_category['image_credit'])): ?>
+				<div class="category-credit"><?php echo html_escape($active_category['image_credit']); ?></div>
+			<?php endif; ?>
+		</div>
 	</div>
-</div>
+<?php else: ?>
+	<div class="row-between mb-3">
+		<div>
+			<h2 class="mb-1"><?php echo html_escape($page_heading); ?></h2>
+			<p class="text-muted mb-0"><?php echo html_escape($page_subheading); ?></p>
+		</div>
+	</div>
+<?php endif; ?>
 
 <div class="shop-layout">
 	<aside class="card filter-panel">

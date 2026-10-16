@@ -129,6 +129,8 @@ class Category_model extends CI_Model
 			'slug'         => $this->make_slug($this->_slug_source($input)),
 			'target_group' => $input['target_group'],
 			'description'  => $input['description'] ?: NULL,
+			'image_url'    => isset($input['image_url']) && trim((string) $input['image_url']) !== '' ? trim((string) $input['image_url']) : NULL,
+			'image_credit' => isset($input['image_credit']) && trim((string) $input['image_credit']) !== '' ? trim((string) $input['image_credit']) : NULL,
 			'is_active'    => isset($input['is_active']) ? 1 : 0,
 			'created_at'   => date('Y-m-d H:i:s'),
 		);
@@ -152,6 +154,8 @@ class Category_model extends CI_Model
 			'slug'         => $this->make_slug($this->_slug_source($input), (int) $id),
 			'target_group' => $input['target_group'],
 			'description'  => $input['description'] ?: NULL,
+			'image_url'    => isset($input['image_url']) && trim((string) $input['image_url']) !== '' ? trim((string) $input['image_url']) : NULL,
+			'image_credit' => isset($input['image_credit']) && trim((string) $input['image_credit']) !== '' ? trim((string) $input['image_credit']) : NULL,
 			'is_active'    => isset($input['is_active']) ? 1 : 0,
 		);
 

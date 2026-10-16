@@ -124,17 +124,18 @@ if ( ! function_exists('whatsapp_number'))
 	}
 }
 
-if ( ! function_exists('whatsapp_display'))
+if ( ! function_exists('whatsapp_format'))
 {
 	/**
-	 * Human readable representation of the configured WhatsApp number,
+	 * Human readable representation of any international WhatsApp number,
 	 * e.g. "+62 852-8885-5892".
 	 *
+	 * @param  string $number
 	 * @return string
 	 */
-	function whatsapp_display()
+	function whatsapp_format($number)
 	{
-		$number = whatsapp_number();
+		$number = preg_replace('/\D+/', '', (string) $number);
 
 		if ($number === '')
 		{
@@ -170,18 +171,33 @@ if ( ! function_exists('whatsapp_display'))
 	}
 }
 
-if ( ! function_exists('whatsapp_link'))
+if ( ! function_exists('whatsapp_display'))
 {
 	/**
-	 * wa.me deep link for the configured owner number, optionally prefilled
-	 * with a chat message.
+	 * Human readable representation of the configured owner WhatsApp
+	 * number, e.g. "+62 852-8885-5892".
 	 *
+	 * @return string
+	 */
+	function whatsapp_display()
+	{
+		return whatsapp_format(whatsapp_number());
+	}
+}
+
+if ( ! function_exists('whatsapp_link_to'))
+{
+	/**
+	 * wa.me deep link for an arbitrary WhatsApp number, optionally
+	 * prefilled with a chat message.
+	 *
+	 * @param  string $number
 	 * @param  string $message
 	 * @return string
 	 */
-	function whatsapp_link($message = '')
+	function whatsapp_link_to($number, $message = '')
 	{
-		$number = whatsapp_number();
+		$number = preg_replace('/\D+/', '', (string) $number);
 
 		if ($number === '')
 		{
@@ -196,6 +212,21 @@ if ( ! function_exists('whatsapp_link'))
 		}
 
 		return $link;
+	}
+}
+
+if ( ! function_exists('whatsapp_link'))
+{
+	/**
+	 * wa.me deep link for the configured owner number, optionally prefilled
+	 * with a chat message.
+	 *
+	 * @param  string $message
+	 * @return string
+	 */
+	function whatsapp_link($message = '')
+	{
+		return whatsapp_link_to(whatsapp_number(), $message);
 	}
 }
 

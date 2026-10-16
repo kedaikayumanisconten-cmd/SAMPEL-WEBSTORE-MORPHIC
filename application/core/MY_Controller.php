@@ -121,6 +121,7 @@ class MY_Controller extends CI_Controller
 		$this->data['store_tagline']     = $this->config->item('store_tagline');
 		$this->data['store_email']       = $this->config->item('store_email');
 		$this->data['store_owner']       = $this->config->item('store_owner');
+		$this->data['store_contacts']    = $this->config->item('store_contacts');
 		$this->data['store_logo']        = $this->config->item('store_logo');
 		$this->data['brand_subtitle']    = $this->config->item('brand_subtitle');
 		$this->data['hero_eyebrow']      = $this->config->item('hero_eyebrow');

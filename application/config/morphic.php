@@ -42,10 +42,18 @@ $config['footer_copyright']  = 'M.o.r.p.h.i.c Hydra x Shiddiq Project';
 | 'store_owner' is the public name shown next to the owner contact info.
 | 'store_whatsapp' is the owner's WhatsApp number in international format
 | (country code, digits only - no "+" or separators). It powers the
-| "Chat via WhatsApp" buttons and the contact block in the footer.
+| "Chat via WhatsApp" buttons and the floating chat button.
+| 'store_contacts' lists every owner reachable on WhatsApp, in the order
+| they appear in the footer: 'name' is the display label and 'whatsapp'
+| is the international number (digits only - no "+" or separators).
 */
 $config['store_owner']       = 'Shiddiq';
 $config['store_whatsapp']    = '6285288855892';
+$config['store_contacts']    = array(
+	array('name' => 'Haydra',  'whatsapp' => '6282162740177'),
+	array('name' => 'Shiddiq', 'whatsapp' => '6285288855892'),
+	array('name' => 'Faisal',  'whatsapp' => '6289612492900'),
+);
 
 /*
 |--------------------------------------------------------------------------

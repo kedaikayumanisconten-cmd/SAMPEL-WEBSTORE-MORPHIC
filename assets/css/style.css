@@ -387,6 +387,10 @@ small { font-size: .82em; }
 .btn-danger:hover { background: rgba(239, 68, 68, .18); border-color: rgba(239, 68, 68, .5); color: #991B1B; }
 .btn-success { background: rgba(16, 185, 129, .12); border-color: rgba(16, 185, 129, .35); color: #047857; }
 .btn-success:hover { background: rgba(16, 185, 129, .2); border-color: rgba(16, 185, 129, .5); color: #065F46; }
+.btn-wa { background: #25D366; color: #fff; box-shadow: 0 8px 20px -2px rgba(37, 211, 102, .45); }
+.btn-wa:hover { background: #1EBE57; color: #fff; }
+.btn-wa-icon { display: inline-flex; width: 18px; height: 18px; flex: 0 0 auto; animation: wa-bob 2s ease-in-out infinite; }
+.btn-wa-icon svg { width: 100%; height: 100%; }
 .btn-block { width: 100%; }
 .btn-sm { padding: 8px 16px; font-size: .82rem; }
 .btn-lg { padding: 14px 32px; font-size: 1rem; }
@@ -1006,15 +1010,86 @@ table.data .cell-sub { color: var(--text-dim); font-size: .78rem; }
    21. Footer
    -------------------------------------------------------------------------- */
 .site-footer { flex: 0 0 auto; border-top: 1px solid var(--border); background: var(--n0); padding: 40px 0 28px; margin-top: auto; }
-.footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 30px; }
+.footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.15fr; gap: 30px; }
 .footer-grid h4 { font-size: .78rem; text-transform: uppercase; letter-spacing: .12em; color: var(--text-dim); }
 .footer-grid ul { list-style: none; margin: 0; padding: 0; }
 .footer-grid li { margin-bottom: 8px; }
 .footer-grid a { color: var(--text-muted); font-size: .88rem; }
 .footer-grid a:hover { color: var(--primary-600); }
+.footer-contact li { display: flex; flex-direction: column; gap: 2px; }
+.footer-contact-label { font-size: .68rem; text-transform: uppercase; letter-spacing: .1em; color: var(--text-dim); }
+.footer-contact a { display: inline-flex; align-items: center; gap: 6px; }
+.footer-wa-icon { display: inline-flex; width: 15px; height: 15px; color: #25D366; animation: wa-bob 2s ease-in-out infinite; }
+.footer-wa-icon svg { width: 100%; height: 100%; }
 .footer-bottom { margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: .8rem; color: var(--text-dim); }
 .site-footer .brand { color: var(--n900); }
 .site-footer .brand:hover { color: var(--n900); }
+
+/* Floating WhatsApp CTA (icon only, animated) */
+.wa-float {
+	position: fixed;
+	right: 24px;
+	bottom: 24px;
+	z-index: 80;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 62px;
+	height: 62px;
+	border-radius: 50%;
+	background: #25D366;
+	color: #fff;
+	box-shadow: 0 12px 26px -6px rgba(37, 211, 102, .65);
+	animation: wa-glow 1.6s ease-in-out infinite;
+	transition: transform .15s ease, background .15s ease;
+}
+.wa-float:hover { background: #1EBE57; color: #fff; transform: scale(1.12); }
+.wa-float:active { transform: scale(.96); }
+
+.wa-float-ring {
+	position: absolute;
+	inset: 0;
+	border-radius: 50%;
+	background: #25D366;
+	animation: wa-ping 1.6s cubic-bezier(0, 0, .2, 1) infinite;
+}
+.wa-float-icon {
+	position: relative;
+	z-index: 2;
+	display: inline-flex;
+	width: 32px;
+	height: 32px;
+	transform-origin: 50% 50%;
+	animation: wa-live 1.6s ease-in-out infinite;
+}
+.wa-float-icon svg { width: 100%; height: 100%; }
+
+@keyframes wa-ping {
+	0%   { transform: scale(1);   opacity: .55; }
+	70%  { transform: scale(2.1); opacity: 0; }
+	100% { transform: scale(2.1); opacity: 0; }
+}
+@keyframes wa-glow {
+	0%, 100% { box-shadow: 0 12px 26px -6px rgba(37, 211, 102, .65); }
+	50%      { box-shadow: 0 14px 34px -4px rgba(37, 211, 102, .95); }
+}
+@keyframes wa-live {
+	0%   { transform: translateY(0) rotate(0deg) scale(1); }
+	14%  { transform: translateY(-4px) rotate(-14deg) scale(1.08); }
+	28%  { transform: translateY(0) rotate(12deg) scale(1.08); }
+	42%  { transform: translateY(-2px) rotate(-8deg) scale(1.04); }
+	56%  { transform: translateY(-3px) rotate(6deg) scale(1.04); }
+	70%  { transform: translateY(0) rotate(0deg) scale(1); }
+	86%  { transform: translateY(-3px) rotate(0deg) scale(1.02); }
+	100% { transform: translateY(0) rotate(0deg) scale(1); }
+}
+@keyframes wa-bob {
+	0%, 100% { transform: translateY(0); }
+	50%      { transform: translateY(-3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+	.wa-float, .wa-float-ring, .wa-float-icon, .btn-wa-icon, .footer-wa-icon { animation: none; }
+}
 
 /* --------------------------------------------------------------------------
    22. Admin shell
@@ -1292,6 +1367,8 @@ table.data .cell-sub { color: var(--text-dim); font-size: .78rem; }
 	.showcase { padding: 16px 16px 18px; border-radius: var(--radius-lg); }
 	.slider-slide { flex: 0 0 clamp(210px, 68%, 260px); }
 	.hero { padding: 32px 20px; }
+	.wa-float { right: 16px; bottom: 16px; width: 56px; height: 56px; }
+	.wa-float-icon { width: 28px; height: 28px; }
 }
 
 /* --------------------------------------------------------------------------

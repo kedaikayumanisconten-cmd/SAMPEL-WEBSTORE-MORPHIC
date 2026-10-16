@@ -101,6 +101,8 @@ class MY_Controller extends CI_Controller
 	{
 		$this->data['store_name']    = $this->config->item('store_name');
 		$this->data['store_tagline'] = $this->config->item('store_tagline');
+		$this->data['store_email']   = $this->config->item('store_email');
+		$this->data['store_owner']   = $this->config->item('store_owner');
 		$this->data['nav_categories'] = $this->category_model->get_active();
 		$this->data['cart_count']    = $this->cart_count();
 		$this->data['owned_ids']     = $this->owned_product_ids();

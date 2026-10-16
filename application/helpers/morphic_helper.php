@@ -108,6 +108,97 @@ if ( ! function_exists('is_remote_url'))
 	}
 }
 
+if ( ! function_exists('whatsapp_number'))
+{
+	/**
+	 * Digits-only WhatsApp number in international format (no "+" or
+	 * separators), ready to be embedded in a wa.me link.
+	 *
+	 * @return string
+	 */
+	function whatsapp_number()
+	{
+		$ci =& get_instance();
+
+		return preg_replace('/\D+/', '', (string) $ci->config->item('store_whatsapp'));
+	}
+}
+
+if ( ! function_exists('whatsapp_display'))
+{
+	/**
+	 * Human readable representation of the configured WhatsApp number,
+	 * e.g. "+62 852-8885-5892".
+	 *
+	 * @return string
+	 */
+	function whatsapp_display()
+	{
+		$number = whatsapp_number();
+
+		if ($number === '')
+		{
+			return '';
+		}
+
+		if (strpos($number, '62') === 0)
+		{
+			$rest   = substr($number, 2);
+			$groups = array();
+
+			if (strlen($rest) > 3)
+			{
+				$groups[] = substr($rest, 0, 3);
+				$rest     = substr($rest, 3);
+			}
+
+			while (strlen($rest) > 4)
+			{
+				$groups[] = substr($rest, 0, 4);
+				$rest     = substr($rest, 4);
+			}
+
+			if ($rest !== '')
+			{
+				$groups[] = $rest;
+			}
+
+			return '+62 '.implode('-', $groups);
+		}
+
+		return '+'.$number;
+	}
+}
+
+if ( ! function_exists('whatsapp_link'))
+{
+	/**
+	 * wa.me deep link for the configured owner number, optionally prefilled
+	 * with a chat message.
+	 *
+	 * @param  string $message
+	 * @return string
+	 */
+	function whatsapp_link($message = '')
+	{
+		$number = whatsapp_number();
+
+		if ($number === '')
+		{
+			return '';
+		}
+
+		$link = 'https://wa.me/'.$number;
+
+		if ($message !== '')
+		{
+			$link .= '?text='.rawurlencode($message);
+		}
+
+		return $link;
+	}
+}
+
 if ( ! function_exists('product_image_url'))
 {
 	/**

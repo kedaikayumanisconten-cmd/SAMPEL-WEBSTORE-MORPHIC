@@ -20,6 +20,15 @@ $config['store_email']       = 'support@morphic.store';
 $config['store_currency']    = 'IDR';
 
 /*
+| 'store_owner' is the public name shown next to the owner contact info.
+| 'store_whatsapp' is the owner's WhatsApp number in international format
+| (country code, digits only - no "+" or separators). It powers the
+| "Chat via WhatsApp" buttons and the contact block in the footer.
+*/
+$config['store_owner']       = 'Shiddiq';
+$config['store_whatsapp']    = '6285288855892';
+
+/*
 |--------------------------------------------------------------------------
 | Catalog
 |--------------------------------------------------------------------------

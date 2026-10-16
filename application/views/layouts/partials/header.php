@@ -33,8 +33,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<?php else: ?>
 						<span class="brand-mark">M</span>
 					<?php endif; ?>
-					<span>
-						<?php echo html_escape($store_name); ?>
+					<span class="brand-text">
+						<span class="brand-name"><?php echo html_escape($store_name); ?></span>
 						<small><?php echo html_escape($brand_subtitle); ?></small>
 					</span>
 				</a>
@@ -49,6 +49,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<?php if ($is_admin): ?>
 						<a href="<?php echo site_url('admin'); ?>">Admin</a>
 					<?php endif; ?>
+
+					<div class="nav-account">
+						<?php if ($is_logged_in): ?>
+							<a href="<?php echo site_url('library'); ?>">Library Saya</a>
+							<a href="<?php echo site_url('account/profile'); ?>">Profil</a>
+							<a href="<?php echo site_url('logout'); ?>" data-confirm="Keluar dari akun Anda?">Keluar</a>
+						<?php else: ?>
+							<a href="<?php echo site_url('login'); ?>">Masuk</a>
+							<a href="<?php echo site_url('register'); ?>">Daftar</a>
+						<?php endif; ?>
+					</div>
 				</nav>
 
 				<div class="header-actions">
@@ -74,11 +85,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<?php echo html_escape(initials_of($current_user['full_name'])); ?>
 							<?php endif; ?>
 						</a>
-						<a class="btn btn-primary btn-sm" href="<?php echo site_url('library'); ?>">Library Saya</a>
-						<a class="btn btn-ghost btn-sm" href="<?php echo site_url('logout'); ?>" data-confirm="Keluar dari akun Anda?">Keluar</a>
+						<a class="btn btn-primary btn-sm btn-account" href="<?php echo site_url('library'); ?>">Library Saya</a>
+						<a class="btn btn-ghost btn-sm btn-account" href="<?php echo site_url('logout'); ?>" data-confirm="Keluar dari akun Anda?">Keluar</a>
 					<?php else: ?>
-						<a class="btn btn-ghost btn-sm" href="<?php echo site_url('login'); ?>">Masuk</a>
-						<a class="btn btn-primary btn-sm" href="<?php echo site_url('register'); ?>">Daftar</a>
+						<a class="btn btn-ghost btn-sm btn-account" href="<?php echo site_url('login'); ?>">Masuk</a>
+						<a class="btn btn-primary btn-sm btn-account" href="<?php echo site_url('register'); ?>">Daftar</a>
 					<?php endif; ?>
 				</div>
 			</div>

@@ -9,11 +9,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="footer-grid">
 				<div>
 					<a class="brand mb-2" href="<?php echo site_url('/'); ?>">
-						<span class="brand-mark">M</span>
+						<?php $footer_logo = brand_logo_url($store_logo); ?>
+						<?php if ($footer_logo): ?>
+							<span class="brand-logo"><img src="<?php echo html_escape($footer_logo); ?>" alt="<?php echo html_escape($store_name); ?>"></span>
+						<?php else: ?>
+							<span class="brand-mark">M</span>
+						<?php endif; ?>
 						<span><?php echo html_escape($store_name); ?></span>
 					</a>
 					<p class="text-muted"><?php echo html_escape($store_tagline); ?></p>
-					<p class="text-dim"><small>Semua produk digital dikirim melalui Library dengan serial number &amp; kuota unduh yang dapat diaudit.</small></p>
+					<?php if (trim((string) $footer_note) !== ''): ?>
+						<p class="text-dim"><small><?php echo html_escape($footer_note); ?></small></p>
+					<?php endif; ?>
 				</div>
 
 				<div>
@@ -59,7 +66,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 
 			<div class="footer-bottom">
-				<span>Copyright &copy; <?php echo date('Y'); ?> M.o.r.p.h.i.c Hydra x Shiddiq Project</span>
+				<span>Copyright &copy; <?php echo date('Y'); ?> <?php echo html_escape($footer_copyright); ?></span>
 			</div>
 		</div>
 	</footer>

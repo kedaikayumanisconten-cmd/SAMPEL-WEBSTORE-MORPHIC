@@ -38,7 +38,12 @@ $is_active = function ($needle) {
 	<div class="admin-shell">
 		<aside class="admin-sidebar" id="admin-sidebar">
 			<a class="brand" href="<?php echo site_url('admin'); ?>">
-				<span class="brand-mark">M</span>
+				<?php $admin_logo = brand_logo_url($store_logo); ?>
+				<?php if ($admin_logo): ?>
+					<span class="brand-logo"><img src="<?php echo html_escape($admin_logo); ?>" alt="<?php echo html_escape($store_name); ?>"></span>
+				<?php else: ?>
+					<span class="brand-mark">M</span>
+				<?php endif; ?>
 				<span>
 					<?php echo html_escape($store_name); ?>
 					<small>Control Panel</small>
@@ -71,6 +76,7 @@ $is_active = function ($needle) {
 				<li><a href="<?php echo site_url('admin/profile'); ?>" class="<?php echo $is_active('admin/profile'); ?>">&#9881; Username &amp; Password</a></li>
 
 				<li class="nav-group">Toko</li>
+				<li><a href="<?php echo site_url('admin/settings'); ?>" class="<?php echo $is_active('admin/settings'); ?>">&#9881; Pengaturan Situs</a></li>
 				<li><a href="<?php echo site_url('/'); ?>" target="_blank" rel="noopener">&#8599; Lihat Storefront</a></li>
 				<li><a href="<?php echo site_url('logout'); ?>">&#9099; Keluar</a></li>
 			</ul>
@@ -101,7 +107,7 @@ $is_active = function ($needle) {
 				<?php $this->load->view($content_view); ?>
 
 				<footer class="admin-footer">
-					<span>Copyright &copy; <?php echo date('Y'); ?> M.o.r.p.h.i.c Hydra x Shiddiq Project</span>
+					<span>Copyright &copy; <?php echo date('Y'); ?> <?php echo html_escape($footer_copyright); ?></span>
 					<span>M.O.R.P.H.I.C Control Panel</span>
 				</footer>
 			</div>

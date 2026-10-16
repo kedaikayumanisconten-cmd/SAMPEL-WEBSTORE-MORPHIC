@@ -244,6 +244,22 @@ if ( ! function_exists('category_image_url'))
 	}
 }
 
+if ( ! function_exists('brand_logo_url'))
+{
+	/**
+	 * Resolve the configured store logo into a renderable URL. Accepts the
+	 * same reference shapes as product_image_url() and returns NULL when no
+	 * logo is set, so views can fall back to the letter mark.
+	 *
+	 * @param  string|null $value
+	 * @return string|null
+	 */
+	function brand_logo_url($value)
+	{
+		return product_image_url($value);
+	}
+}
+
 if ( ! function_exists('preview_media_url'))
 {
 	/**

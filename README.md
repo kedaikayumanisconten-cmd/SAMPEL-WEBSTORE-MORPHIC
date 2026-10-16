@@ -69,8 +69,22 @@ dengan level lebih tinggi (mis. admin tidak bisa menyentuh super_admin/owner).
 
 ## 3. Identitas toko
 
-Nama toko, tagline, alamat email, jumlah item per halaman, daftar metode pembayaran,
-rekening bank, dan batas upload diatur di **`application/config/morphic.php`**.
+Identitas toko diubah dari **Admin → Toko → Pengaturan Situs** (`admin/settings`), tanpa
+menyentuh kode. Yang bisa diatur:
+
+| Grup | Isi |
+|---|---|
+| **Logo Toko** | Upload logo baru (PNG/JPG/WEBP/GIF/AVIF, maks 2 MB, disimpan di `assets/uploads/brand/`), tempel URL logo, atau hapus logo dan kembali ke lambang huruf. |
+| **Identitas Toko** | Nama toko, sub-judul merek di header, dan tagline (dipakai sebagai meta description). |
+| **Kontak Owner** | Nama owner, nomor WhatsApp (format internasional tanpa `+`), dan email publik. |
+| **Header / Hero Beranda** | Label kecil, judul, dan paragraf pengantar pada hero halaman depan. |
+| **Tentang (About)** | Judul dan isi bagian *Tentang* di beranda (kosongkan isi untuk menyembunyikannya). |
+| **Footer** | Catatan kecil dan teks hak cipta (tahun ditambahkan otomatis). |
+
+Nilai disimpan pada tabel **`site_settings`** dan menimpa default di
+**`application/config/morphic.php`** saat runtime (lihat `MY_Controller::_apply_site_settings()`).
+Jadi pengaturan teknis lain — jumlah item per halaman, metode pembayaran, rekening bank,
+batas upload, dan sebagainya — tetap diatur lewat file config tersebut.
 
 ---
 
@@ -209,18 +223,18 @@ Grafik penjualan terisi sendiri seiring order masuk; data contoh hanya berisi 3 
 application/
   config/           konfigurasi (config, database, routes, morphic, unsplash)
   controllers/      Home, Shop, Auth, Cart, Checkout, Account, Download
-    admin/          Dashboard, Products, Categories, Orders, Licenses, Users, Visits, Profile
+    admin/          Dashboard, Products, Categories, Orders, Licenses, Users, Visits, Profile, Settings
   core/             MY_Controller + Frontend/Customer/Admin_Controller
   helpers/          morphic_helper.php (harga, tanggal, URL gambar, dll)
                     analytics_helper.php (deteksi perangkat + grafik SVG)
   libraries/        Unsplash.php (pencarian foto Unsplash)
-  models/           User, Category, Product, Order, License, Rate_limit, Visit
+  models/           User, Category, Product, Order, License, Rate_limit, Visit, Setting
   views/            layouts/, partials/, shop/, cart/, checkout/, account/, admin/
 assets/
   css/style.css     seluruh tema
   js/app.js         interaksi umum
   js/thumb-picker.js  pemilih foto produk
-  uploads/          thumbnails/ dan payment_proofs/ (hasil upload admin & customer)
+  uploads/          thumbnails/, brand/, dan payment_proofs/ (hasil upload admin & customer)
 storage/
   private_products/ berkas produk yang diunduh (di luar akses publik)
 tools/

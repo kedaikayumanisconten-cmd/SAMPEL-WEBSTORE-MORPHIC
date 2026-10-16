@@ -212,6 +212,22 @@ CREATE TABLE `page_visits` (
     CONSTRAINT `fk_visits_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- ----------------------------------------------------------------------------
+-- 10. Table: site_settings (Editable storefront content)
+-- Key/value store for content the admin can change without touching code:
+-- store identity, logo, contact, hero/about copy and the footer. The values
+-- replace the defaults in application/config/morphic.php at runtime.
+-- ----------------------------------------------------------------------------
+DROP TABLE IF EXISTS `site_settings`;
+CREATE TABLE `site_settings` (
+    `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `setting_key` varchar(100) NOT NULL,
+    `setting_value` text DEFAULT NULL,
+    `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `idx_site_settings_key` (`setting_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 -- ============================================================================
 -- SEED DATA (CONTOH DATA AWAL M.O.R.P.H.I.C)
@@ -338,5 +354,24 @@ INSERT INTO `user_licenses` (
 (2, 2, 1, 5, 'NO-KEY-REQUIRED-ITEM-0002', 'dl_tok_1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d', 2, 10, 0),
 (3, 3, 2, 1, 'MPH-SYNT-4410-7732-XZYW', 'dl_tok_5f4e3d2c1b0a9f8e7d6c5b4a3f2e1d0c', 1, 10, 0),
 (4, 3, 2, 2, 'MPH-ATVB-1198-3345-LMNP', 'dl_tok_7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f', 0, 10, 0);
+
+-- ----------------------------------------------------------------------------
+-- Seed 6: Site Settings (konten storefront yang dapat diubah dari panel admin)
+-- ----------------------------------------------------------------------------
+INSERT INTO `site_settings` (`setting_key`, `setting_value`) VALUES
+('store_name', 'M.O.R.P.H.I.C'),
+('brand_subtitle', 'Digital Asset Store'),
+('store_tagline', 'Digital Software & Asset Store untuk Kreator & Musisi'),
+('store_logo', ''),
+('store_email', 'support@morphic.store'),
+('store_owner', 'Shiddiq'),
+('store_whatsapp', '6285288855892'),
+('hero_eyebrow', 'M.O.R.P.H.I.C Marketplace'),
+('hero_title', 'Semua alat produksi digital untuk kreator & musisi, dalam satu lisensi.'),
+('hero_description', 'VST instrument, preset synth, paket transisi video, sampai LUT color grading sinematik. Setiap pembelian otomatis masuk ke Digital Library dengan serial number dan kuota unduh yang terlacak.'),
+('about_title', 'Tentang M.O.R.P.H.I.C'),
+('about_description', 'M.O.R.P.H.I.C adalah toko aset digital untuk kreator konten dan musisi. Kami mengurasi plugin, preset, LUT, dan paket suara yang siap dipakai, lalu mengirimkannya lewat Digital Library dengan serial number serta kuota unduh yang dapat diaudit.'),
+('footer_note', 'Semua produk digital dikirim melalui Library dengan serial number & kuota unduh yang dapat diaudit.'),
+('footer_copyright', 'M.o.r.p.h.i.c Hydra x Shiddiq Project');
 
 SET FOREIGN_KEY_CHECKS = 1;

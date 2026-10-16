@@ -27,10 +27,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<div class="container">
 			<div class="header-bar">
 				<a class="brand" href="<?php echo site_url('/'); ?>">
-					<span class="brand-mark">M</span>
+					<?php $brand_logo = brand_logo_url($store_logo); ?>
+					<?php if ($brand_logo): ?>
+						<span class="brand-logo"><img src="<?php echo html_escape($brand_logo); ?>" alt="<?php echo html_escape($store_name); ?>"></span>
+					<?php else: ?>
+						<span class="brand-mark">M</span>
+					<?php endif; ?>
 					<span>
 						<?php echo html_escape($store_name); ?>
-						<small>Digital Asset Store</small>
+						<small><?php echo html_escape($brand_subtitle); ?></small>
 					</span>
 				</a>
 

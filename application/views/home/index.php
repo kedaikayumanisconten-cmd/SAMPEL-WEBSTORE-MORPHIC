@@ -56,12 +56,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php endif; ?>
 
 <section class="hero">
-	<span class="eyebrow">M.O.R.P.H.I.C Marketplace</span>
-	<h1>Semua alat produksi digital untuk kreator &amp; musisi, dalam satu lisensi.</h1>
-	<p>
-		VST instrument, preset synth, paket transisi video, sampai LUT color grading sinematik.
-		Setiap pembelian otomatis masuk ke <strong>Digital Library</strong> dengan serial number dan kuota unduh yang terlacak.
-	</p>
+	<span class="eyebrow"><?php echo html_escape($hero_eyebrow); ?></span>
+	<h1><?php echo html_escape($hero_title); ?></h1>
+	<p><?php echo nl2br(html_escape($hero_description)); ?></p>
 
 	<div class="hero-actions">
 		<a class="btn btn-primary btn-lg" href="<?php echo site_url('products'); ?>">Jelajahi Katalog</a>
@@ -203,3 +200,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</div>
 	</div>
 </section>
+
+<?php if (trim((string) $about_description) !== ''): ?>
+	<section class="section">
+		<div class="section-head">
+			<div>
+				<h2><?php echo html_escape($about_title); ?></h2>
+			</div>
+		</div>
+
+		<div class="card">
+			<p class="text-muted mb-0"><?php echo nl2br(html_escape($about_description)); ?></p>
+		</div>
+	</section>
+<?php endif; ?>

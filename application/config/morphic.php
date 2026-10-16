@@ -20,6 +20,25 @@ $config['store_email']       = 'support@morphic.store';
 $config['store_currency']    = 'IDR';
 
 /*
+ * The values below are the fallback defaults for the editable storefront
+ * content. Anything saved through the admin "Pengaturan Situs" page is stored
+ * in the site_settings table and overrides these at runtime (see
+ * MY_Controller::_apply_site_settings()).
+ */
+$config['brand_subtitle']    = 'Digital Asset Store';
+$config['store_logo']        = ''; // relative path (assets/uploads/brand/...) or absolute URL; empty = letter mark
+
+$config['hero_eyebrow']      = 'M.O.R.P.H.I.C Marketplace';
+$config['hero_title']        = 'Semua alat produksi digital untuk kreator & musisi, dalam satu lisensi.';
+$config['hero_description']  = 'VST instrument, preset synth, paket transisi video, sampai LUT color grading sinematik. Setiap pembelian otomatis masuk ke Digital Library dengan serial number dan kuota unduh yang terlacak.';
+
+$config['about_title']       = 'Tentang M.O.R.P.H.I.C';
+$config['about_description'] = 'M.O.R.P.H.I.C adalah toko aset digital untuk kreator konten dan musisi. Kami mengurasi plugin, preset, LUT, dan paket suara yang siap dipakai, lalu mengirimkannya lewat Digital Library dengan serial number serta kuota unduh yang dapat diaudit.';
+
+$config['footer_note']       = 'Semua produk digital dikirim melalui Library dengan serial number & kuota unduh yang dapat diaudit.';
+$config['footer_copyright']  = 'M.o.r.p.h.i.c Hydra x Shiddiq Project';
+
+/*
 | 'store_owner' is the public name shown next to the owner contact info.
 | 'store_whatsapp' is the owner's WhatsApp number in international format
 | (country code, digits only - no "+" or separators). It powers the
@@ -71,6 +90,7 @@ $config['protected_path']    = 'storage/private_products/';
 */
 $config['upload_thumbnail_path']    = 'assets/uploads/thumbnails/';
 $config['upload_preview_path']      = 'assets/uploads/previews/';
+$config['upload_logo_path']         = 'assets/uploads/brand/';
 $config['upload_payment_proof_path'] = 'assets/uploads/payment_proofs/';
 
 /*

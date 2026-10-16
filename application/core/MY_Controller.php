@@ -58,8 +58,10 @@ class MY_Controller extends CI_Controller
 		$this->load->model('License_model', 'license_model');
 		$this->load->model('Rate_limit_model', 'rate_limit_model');
 		$this->load->model('Visit_model', 'visit_model');
+		$this->load->model('Setting_model', 'setting_model');
 
 		$this->_resolve_current_user();
+		$this->_apply_site_settings();
 		$this->_build_shared_data();
 	}
 
@@ -95,14 +97,39 @@ class MY_Controller extends CI_Controller
 	}
 
 	/**
+	 * Overlay the editable storefront content stored in site_settings on top
+	 * of the code defaults from application/config/morphic.php. Because the
+	 * values are pushed back into the config object, everything that already
+	 * reads config items (helpers, controllers, views) picks them up.
+	 *
+	 * @return void
+	 */
+	protected function _apply_site_settings()
+	{
+		foreach ($this->setting_model->all() as $key => $value)
+		{
+			$this->config->set_item($key, $value === NULL ? '' : $value);
+		}
+	}
+
+	/**
 	 * Data that is needed by the header/footer of (almost) every page.
 	 */
 	protected function _build_shared_data()
 	{
-		$this->data['store_name']    = $this->config->item('store_name');
-		$this->data['store_tagline'] = $this->config->item('store_tagline');
-		$this->data['store_email']   = $this->config->item('store_email');
-		$this->data['store_owner']   = $this->config->item('store_owner');
+		$this->data['store_name']        = $this->config->item('store_name');
+		$this->data['store_tagline']     = $this->config->item('store_tagline');
+		$this->data['store_email']       = $this->config->item('store_email');
+		$this->data['store_owner']       = $this->config->item('store_owner');
+		$this->data['store_logo']        = $this->config->item('store_logo');
+		$this->data['brand_subtitle']    = $this->config->item('brand_subtitle');
+		$this->data['hero_eyebrow']      = $this->config->item('hero_eyebrow');
+		$this->data['hero_title']        = $this->config->item('hero_title');
+		$this->data['hero_description']  = $this->config->item('hero_description');
+		$this->data['about_title']       = $this->config->item('about_title');
+		$this->data['about_description'] = $this->config->item('about_description');
+		$this->data['footer_note']       = $this->config->item('footer_note');
+		$this->data['footer_copyright']  = $this->config->item('footer_copyright');
 		$this->data['nav_categories'] = $this->category_model->get_active();
 		$this->data['cart_count']    = $this->cart_count();
 		$this->data['owned_ids']     = $this->owned_product_ids();

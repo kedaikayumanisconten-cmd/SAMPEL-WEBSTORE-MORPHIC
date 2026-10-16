@@ -4,8 +4,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="auth-shell">
 	<div class="card">
 		<div class="auth-head">
-			<span class="brand-mark">M</span>
-			<h2 class="mb-1">Buat akun M.O.R.P.H.I.C</h2>
+			<?php $auth_logo = brand_logo_url($store_logo); ?>
+			<?php if ($auth_logo): ?>
+				<span class="brand-logo brand-logo-lg"><img src="<?php echo html_escape($auth_logo); ?>" alt="<?php echo html_escape($store_name); ?>"></span>
+			<?php else: ?>
+				<span class="brand-mark">M</span>
+			<?php endif; ?>
+			<h2 class="mb-1">Buat akun <?php echo html_escape($store_name); ?></h2>
 			<p class="text-muted mb-0"><small>Gratis. Tidak ada biaya langganan, cukup bayar produk yang Anda beli.</small></p>
 		</div>
 

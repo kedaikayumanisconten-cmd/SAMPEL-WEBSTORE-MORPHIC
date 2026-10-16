@@ -1,0 +1,37 @@
+RewriteEngine On
+
+# Block direct access to all dotfiles (.env, .gitignore, .htaccess, ...)
+<FilesMatch "^\.">
+	Require all denied
+</FilesMatch>
+
+# Block direct access to sensitive files: database.sql, *.md, logs, dumps, etc.
+<FilesMatch "\.(sql|md|markdown|log|bak|old|orig|swp|dist|ini|sh|lock|yml|yaml|json)$">
+	<IfModule authz_core_module>
+		Require all denied
+	</IfModule>
+	<IfModule !authz_core_module>
+		Order allow,deny
+		Deny from all
+	</IfModule>
+</FilesMatch>
+
+# Belt-and-braces: block database dumps by name even without the .sql extension
+<Files "database.sql">
+	<IfModule authz_core_module>
+		Require all denied
+	</IfModule>
+	<IfModule !authz_core_module>
+		Order allow,deny
+		Deny from all
+	</IfModule>
+</Files>
+
+# Force HTTPS on production (skip localhost so local dev keeps working).
+# RewriteCond %{HTTPS} off
+# RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)(:[0-9]+)?$ [NC]
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L]

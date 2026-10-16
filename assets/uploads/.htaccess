@@ -1,0 +1,14 @@
+# Prevent script execution inside the upload directory while still allowing
+# uploaded images / audio to be served.
+<FilesMatch "\.(php|phtml|php[0-9]|cgi|pl|py|sh|shtml|htaccess)$">
+	<IfModule authz_core_module>
+		Require all denied
+	</IfModule>
+	<IfModule !authz_core_module>
+		Order allow,deny
+		Deny from all
+	</IfModule>
+</FilesMatch>
+
+Options -Indexes -ExecCGI
+AddType text/plain .php .phtml .php3 .php4 .php5 .php7 .php8

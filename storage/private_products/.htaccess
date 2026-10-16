@@ -1,0 +1,20 @@
+# Deny every direct request to the protected product storage.
+# Digital goods are only ever streamed by the Download controller.
+<IfModule authz_core_module>
+	Require all denied
+</IfModule>
+<IfModule !authz_core_module>
+	Order allow,deny
+	Deny from all
+</IfModule>
+
+# Never execute anything that ends up in here.
+<FilesMatch "\.(php|phtml|php[0-9]|cgi|pl|py|sh)$">
+	<IfModule authz_core_module>
+		Require all denied
+	</IfModule>
+	<IfModule !authz_core_module>
+		Order allow,deny
+		Deny from all
+	</IfModule>
+</FilesMatch>

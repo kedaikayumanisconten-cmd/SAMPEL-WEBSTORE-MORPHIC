@@ -6,11 +6,55 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *
  * @var array $featured
  * @var array $latest
+ * @var array $slider
  * @var array $categories
  * @var array $cart_ids
  * @var array $hero_stats
  */
 ?>
+<?php if ( ! empty($slider)): ?>
+	<section class="showcase" data-slider aria-label="Cuplikan produk">
+		<div class="showcase-bar">
+			<span class="eyebrow mb-0">Sedang tren di M.O.R.P.H.I.C</span>
+			<div class="slider-controls">
+				<button type="button" class="slider-nav" data-slider-prev aria-label="Produk sebelumnya">&#8249;</button>
+				<button type="button" class="slider-nav" data-slider-next aria-label="Produk berikutnya">&#8250;</button>
+			</div>
+		</div>
+
+		<div class="media-slider">
+			<div class="slider-viewport" data-slider-track tabindex="0" aria-label="Slider cuplikan produk">
+				<?php foreach ($slider as $product): ?>
+					<?php $image = product_image_url($product['thumbnail_url']); ?>
+					<a class="slider-slide" href="<?php echo site_url('product/'.$product['slug']); ?>">
+						<div class="slider-media">
+							<?php if ($image): ?>
+								<img src="<?php echo html_escape($image); ?>" alt="<?php echo html_escape($product['title']); ?>" loading="lazy">
+							<?php else: ?>
+								<span class="thumb-fallback"><?php echo html_escape(initials_of($product['title'])); ?></span>
+							<?php endif; ?>
+						</div>
+
+						<span class="slider-overlay"></span>
+
+						<span class="badge badge-accent slider-tag"><?php echo html_escape($product['category_name']); ?></span>
+						<span class="slider-price"><span class="currency">Rp</span><?php echo rupiah($product['price'], FALSE); ?></span>
+
+						<div class="slider-caption">
+							<h3 class="slider-title"><?php echo html_escape($product['title']); ?></h3>
+							<span class="slider-audience"><?php echo html_escape(target_group_label($product['target_group'])); ?> &middot; v<?php echo html_escape($product['version']); ?></span>
+						</div>
+					</a>
+				<?php endforeach; ?>
+			</div>
+
+			<div class="slider-progress" aria-hidden="true">
+				<span data-slider-progress></span>
+			</div>
+		</div>
+	</section>
+<?php endif; ?>
+
 <section class="hero">
 	<span class="eyebrow">M.O.R.P.H.I.C Marketplace</span>
 	<h1>Semua alat produksi digital untuk kreator &amp; musisi, dalam satu lisensi.</h1>

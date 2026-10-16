@@ -142,7 +142,7 @@ foreach ($referrers as $referrer)
 			'width'  => 540,
 			'height' => 250,
 			'format' => 'rupiah',
-			'color'  => '#7c5cff',
+			'color'  => '#F55D2C',
 			'empty'  => 'Belum ada pesanan lunas pada periode ini.',
 		)); ?>
 	</section>
@@ -166,8 +166,8 @@ foreach ($referrers as $referrer)
 			<span class="badge badge-muted"><?php echo number_format((int) $visit_stats['hits'], 0, ',', '.'); ?> page view</span>
 		</div>
 		<span class="chart-legend-row">
-			<span><span class="legend-dot" style="background:#7c5cff"></span> Page view</span>
-			<span><span class="legend-dot" style="background:#22d3ee"></span> Pengunjung unik</span>
+			<span><span class="legend-dot" style="background:#F55D2C"></span> Page view</span>
+			<span><span class="legend-dot" style="background:#2F80ED"></span> Pengunjung unik</span>
 			<?php if ((int) $visit_stats['bots'] > 0): ?>
 				<span class="text-dim"><?php echo (int) $visit_stats['bots']; ?> hit bot diabaikan</span>
 			<?php endif; ?>
@@ -176,8 +176,8 @@ foreach ($referrers as $referrer)
 			'width'    => 540,
 			'height'   => 250,
 			'series2'  => $unique_chart,
-			'color'    => '#7c5cff',
-			'color2'   => '#22d3ee',
+			'color'    => '#F55D2C',
+			'color2'   => '#2F80ED',
 			'empty'    => 'Belum ada kunjungan tercatat.',
 		)); ?>
 	</section>
@@ -204,7 +204,7 @@ foreach ($referrers as $referrer)
 		<?php echo svg_bar_chart($hour_series, array(
 			'width'  => 460,
 			'height' => 220,
-			'color'  => '#22d3ee',
+			'color'  => '#2F80ED',
 			'empty'  => 'Belum ada kunjungan.',
 		)); ?>
 	</section>

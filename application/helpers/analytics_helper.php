@@ -206,7 +206,7 @@ if ( ! function_exists('chart_palette'))
 	 */
 	function chart_palette()
 	{
-		return array('#7c5cff', '#22d3ee', '#34d399', '#fbbf24', '#f87171', '#a48bff', '#38bdf8', '#f472b6');
+		return array('#F55D2C', '#2F80ED', '#10B981', '#F59E0B', '#EF4444', '#B8350F', '#38BDF8', '#F472B6');
 	}
 }
 
@@ -367,8 +367,8 @@ if ( ! function_exists('svg_area_chart'))
 		$width  = isset($options['width']) ? (float) $options['width'] : 760.0;
 		$height = isset($options['height']) ? (float) $options['height'] : 260.0;
 		$format = isset($options['format']) ? $options['format'] : 'number';
-		$color  = isset($options['color']) ? $options['color'] : '#7c5cff';
-		$color2 = isset($options['color2']) ? $options['color2'] : '#22d3ee';
+		$color  = isset($options['color']) ? $options['color'] : '#F55D2C';
+		$color2 = isset($options['color2']) ? $options['color2'] : '#2F80ED';
 		$ticks  = isset($options['ticks']) ? max(2, (int) $options['ticks']) : 4;
 
 		$pad_l = 62.0;
@@ -527,7 +527,7 @@ if ( ! function_exists('svg_bar_chart'))
 		$width  = isset($options['width']) ? (float) $options['width'] : 760.0;
 		$height = isset($options['height']) ? (float) $options['height'] : 240.0;
 		$format = isset($options['format']) ? $options['format'] : 'number';
-		$color  = isset($options['color']) ? $options['color'] : '#22d3ee';
+		$color  = isset($options['color']) ? $options['color'] : '#2F80ED';
 		$ticks  = isset($options['ticks']) ? max(2, (int) $options['ticks']) : 4;
 
 		$pad_l = 60.0;

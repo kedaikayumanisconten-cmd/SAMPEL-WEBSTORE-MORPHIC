@@ -16,6 +16,7 @@ class Home extends Frontend_Controller
 		$this->render('home/index', array(
 			'featured'    => $this->product_model->get_featured(4),
 			'latest'      => $this->product_model->get_latest(6),
+			'slider'      => $this->product_model->get_latest(8),
 			'categories'  => $this->category_model->get_with_counts(),
 			'cart_ids'    => $this->cart_product_ids(),
 			'hero_stats'  => array(

@@ -7,6 +7,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title><?php echo html_escape($page_title); ?></title>
 	<meta name="description" content="<?php echo html_escape($store_tagline); ?>">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
 	<link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?>">
 </head>
 <body>

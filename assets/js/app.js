@@ -139,6 +139,93 @@
 	}
 
 	/**
+	 * Horizontal image slider used by the home page product highlight.
+	 */
+	function initSliders() {
+		document.querySelectorAll('[data-slider]').forEach(function (slider) {
+			var track = slider.querySelector('[data-slider-track]');
+			var prev = slider.querySelector('[data-slider-prev]');
+			var next = slider.querySelector('[data-slider-next]');
+			var progress = slider.querySelector('[data-slider-progress]');
+			var progressBar = progress ? progress.parentElement : null;
+
+			if (!track) {
+				return;
+			}
+
+			function step() {
+				var slide = track.querySelector('.slider-slide');
+
+				if (!slide) {
+					return track.clientWidth;
+				}
+
+				var styles = window.getComputedStyle(track);
+				var gap = parseFloat(styles.columnGap || styles.gap) || 0;
+
+				return slide.getBoundingClientRect().width + gap;
+			}
+
+			function updateState() {
+				var max = track.scrollWidth - track.clientWidth;
+				var scrollable = max > 1;
+
+				if (prev) {
+					prev.disabled = !scrollable || track.scrollLeft <= 1;
+				}
+				if (next) {
+					next.disabled = !scrollable || track.scrollLeft >= max - 1;
+				}
+
+				if (progressBar) {
+					progressBar.style.display = scrollable ? '' : 'none';
+				}
+
+				if (progress && scrollable) {
+					var visible = (track.scrollLeft + track.clientWidth) / track.scrollWidth;
+					progress.style.width = Math.min(100, Math.max(0, visible * 100)) + '%';
+				}
+			}
+
+			function scrollByStep(direction) {
+				track.scrollBy({ left: direction * step(), behavior: 'smooth' });
+			}
+
+			if (prev) {
+				prev.addEventListener('click', function () {
+					scrollByStep(-1);
+				});
+			}
+
+			if (next) {
+				next.addEventListener('click', function () {
+					scrollByStep(1);
+				});
+			}
+
+			track.addEventListener('scroll', function () {
+				window.requestAnimationFrame(updateState);
+			});
+
+			track.addEventListener('keydown', function (event) {
+				if (event.key === 'ArrowRight') {
+					event.preventDefault();
+					scrollByStep(1);
+				} else if (event.key === 'ArrowLeft') {
+					event.preventDefault();
+					scrollByStep(-1);
+				}
+			});
+
+			window.addEventListener('resize', function () {
+				window.requestAnimationFrame(updateState);
+			});
+
+			updateState();
+		});
+	}
+
+	/**
 	 * Derive the slug field from the title field while the admin types.
 	 */
 	function initSlugField() {
@@ -177,5 +264,6 @@
 		initFlashFade();
 		initFilePreviews();
 		initSlugField();
+		initSliders();
 	});
 })();

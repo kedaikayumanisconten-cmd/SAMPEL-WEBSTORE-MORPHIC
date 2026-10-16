@@ -219,14 +219,15 @@ CREATE TABLE `page_visits` (
 
 -- ----------------------------------------------------------------------------
 -- Seed 1: Users
--- Default password untuk akun seed: password (atau ganti melalui fitur hash CI3)
+-- Default password untuk akun seed: password (admin). Owner & superadmin: ownershiddiq.
+-- Ganti melalui fitur hash CI3 bila perlu.
 -- ----------------------------------------------------------------------------
 INSERT INTO `users` (`id`, `full_name`, `username`, `email`, `password_hash`, `role`, `is_active`, `created_at`) VALUES
 (1, 'Morphic Master Admin', 'admin', 'admin@morphic.store', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', 1, NOW()),
 (2, 'Raka Pratama (Video Editor)', 'raka', 'raka.creator@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'customer', 1, NOW()),
 (3, 'Nadia Symphony (Music Producer)', 'nadia', 'nadia.music@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'customer', 1, NOW()),
-(4, 'Store Owner', 'owner', 'owner@morphic.store', '$2y$10$HPLRAyNLE9fPokiB7pzb6Oo.F/QNUdSjFRy8Fu5kBVTnE2f.I4pVO', 'owner', 1, NOW()),
-(5, 'Super Administrator', 'superadmin', 'superadmin@morphic.store', '$2y$10$d8CYwhEjOQUR.kRSLLyMHuihKK2mMHVrsPLWHw/JNu8dGiq1pJK9K', 'super_admin', 1, NOW());
+(4, 'Store Owner', 'owner', 'owner@morphic.store', '$2y$10$jpy2i4fWFTbnGyG0nV9ZV.ONCCEkhggabscOaQiUxErJQk2ISOJtK', 'owner', 1, NOW()),
+(5, 'Super Administrator', 'superadmin', 'superadmin@morphic.store', '$2y$10$9aUU8fGg7lchvu6Px0yt4uuqBN45Sa6C9siBhpQrfGKchJzjjro5.', 'super_admin', 1, NOW());
 
 -- ----------------------------------------------------------------------------
 -- Seed 2: Categories (Creator & Musician)

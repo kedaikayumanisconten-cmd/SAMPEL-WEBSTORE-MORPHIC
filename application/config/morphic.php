@@ -92,6 +92,7 @@ $config['upload_thumbnail_path']    = 'assets/uploads/thumbnails/';
 $config['upload_preview_path']      = 'assets/uploads/previews/';
 $config['upload_logo_path']         = 'assets/uploads/brand/';
 $config['upload_payment_proof_path'] = 'assets/uploads/payment_proofs/';
+$config['upload_avatar_path']       = 'assets/uploads/avatars/';
 
 /*
 |--------------------------------------------------------------------------

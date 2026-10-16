@@ -1280,8 +1280,11 @@ table.data .cell-sub { color: var(--text-dim); font-size: .78rem; }
 	font-weight: 800;
 	font-size: .82rem;
 	letter-spacing: .02em;
+	overflow: hidden;
 }
+.avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .avatar-lg { width: 62px; height: 62px; font-size: 1.15rem; }
+.avatar-sm { width: 30px; height: 30px; font-size: .66rem; }
 
 .input-prefix { display: flex; align-items: stretch; }
 .input-prefix > span {
@@ -1297,6 +1300,16 @@ table.data .cell-sub { color: var(--text-dim); font-size: .78rem; }
 }
 .input-prefix > input { border-radius: 0 var(--radius) var(--radius) 0; }
 .admin-topbar a.badge { text-decoration: none; }
+.admin-user {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	text-decoration: none;
+	color: var(--n900);
+	font-weight: 600;
+	font-size: .85rem;
+}
+.admin-user:hover { color: var(--primary-600); }
 .admin-footer {
 	display: flex;
 	justify-content: space-between;

@@ -33,6 +33,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</div>
 			</div>
 
+			<div class="form-group">
+				<label for="phone">Nomor Telepon / WhatsApp <span class="text-dim">(opsional)</span></label>
+				<input type="tel" id="phone" name="phone" value="<?php echo html_escape(set_value('phone')); ?>" placeholder="mis. 08123456789" autocomplete="tel">
+				<div class="form-hint">Bisa diubah kapan saja dari halaman profil.</div>
+			</div>
+
 			<div class="form-row">
 				<div class="form-group">
 					<label for="password">Password <span class="req">*</span></label>

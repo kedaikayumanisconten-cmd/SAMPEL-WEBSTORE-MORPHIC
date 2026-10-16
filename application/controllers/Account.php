@@ -91,6 +91,7 @@ class Account extends Customer_Controller
 		// Default action: update the profile fields.
 		$this->form_validation->set_rules('full_name', 'Nama Lengkap', 'trim|required|min_length[3]|max_length[100]');
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|max_length[150]');
+		$this->form_validation->set_rules('phone', 'Nomor Telepon', 'trim|max_length[25]|regex_match[/^[0-9+\-()\s]*$/]');
 
 		if ($this->form_validation->run() === FALSE)
 		{
@@ -104,9 +105,18 @@ class Account extends Customer_Controller
 			$this->redirect_with('account/profile', 'error', 'Email tersebut sudah dipakai akun lain.');
 		}
 
+		$avatar = save_user_avatar($user['avatar']);
+
+		if ($avatar === FALSE)
+		{
+			$this->redirect_with('account/profile', 'error', 'Gagal mengunggah foto profil: '.strip_tags($this->upload->display_errors('', '')));
+		}
+
 		$this->user_model->update($user['id'], array(
 			'full_name' => (string) $this->input->post('full_name', TRUE),
 			'email'     => $email,
+			'phone'     => (string) $this->input->post('phone', TRUE),
+			'avatar'    => $avatar,
 		));
 
 		$this->session->set_userdata('user_name', (string) $this->input->post('full_name', TRUE));

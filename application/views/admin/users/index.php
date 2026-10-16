@@ -94,6 +94,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									<?php endif; ?>
 								</div>
 								<div class="cell-sub"><?php echo html_escape($user['email']); ?></div>
+								<?php if ( ! empty($user['phone'])): ?>
+									<div class="cell-sub"><?php echo html_escape($user['phone']); ?></div>
+								<?php endif; ?>
 								<div class="cell-sub">Gabung <?php echo datetime_id($user['created_at'], FALSE); ?></div>
 							</td>
 							<td class="nowrap">

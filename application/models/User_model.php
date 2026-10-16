@@ -151,6 +151,7 @@ class User_model extends CI_Model
 			'full_name'     => trim($input['full_name']),
 			'username'      => $username !== '' ? $username : NULL,
 			'email'         => strtolower(trim($input['email'])),
+			'phone'         => (isset($input['phone']) && trim((string) $input['phone']) !== '') ? trim((string) $input['phone']) : NULL,
 			'password_hash' => $this->hash_password($input['password']),
 			'role'          => in_array($role, array('owner', 'super_admin', 'admin', 'customer'), TRUE) ? $role : 'customer',
 			'is_active'     => isset($input['is_active']) ? (int) $input['is_active'] : 1,
@@ -171,7 +172,7 @@ class User_model extends CI_Model
 	 */
 	public function update($id, array $input)
 	{
-		$allowed = array('full_name', 'username', 'email', 'is_active', 'role');
+		$allowed = array('full_name', 'username', 'email', 'phone', 'avatar', 'is_active', 'role');
 		$data    = array();
 
 		foreach ($allowed as $field)
@@ -187,6 +188,16 @@ class User_model extends CI_Model
 
 				// An empty username clears the alias (email login still works).
 				$data[$field] = ($field === 'username' && $value === '') ? NULL : $value;
+
+				continue;
+			}
+
+			if ($field === 'phone' || $field === 'avatar')
+			{
+				$value = trim((string) $input[$field]);
+
+				// An empty contact field clears the stored value.
+				$data[$field] = ($value === '') ? NULL : $value;
 
 				continue;
 			}
@@ -511,6 +522,7 @@ class User_model extends CI_Model
 			$this->db->group_start()
 				->like('full_name', $filters['q'])
 				->or_like('email', $filters['q'])
+				->or_like('phone', $filters['q'])
 				->group_end();
 		}
 

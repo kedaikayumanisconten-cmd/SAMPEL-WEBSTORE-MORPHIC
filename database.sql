@@ -38,6 +38,8 @@ CREATE TABLE `users` (
     `email` varchar(150) NOT NULL,
     `password_hash` varchar(255) NOT NULL,
     `role` enum('owner','super_admin','admin','customer') NOT NULL DEFAULT 'customer',
+    `phone` varchar(25) DEFAULT NULL COMMENT 'Contact phone / WhatsApp number',
+    `avatar` varchar(255) DEFAULT NULL COMMENT 'Relative path to the profile photo',
     `is_active` tinyint(1) NOT NULL DEFAULT 1,
     `last_login_at` datetime DEFAULT NULL,
     `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,

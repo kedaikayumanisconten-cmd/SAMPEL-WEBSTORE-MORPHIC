@@ -139,6 +139,7 @@ class Users extends Admin_Controller
 		$this->form_validation->set_rules('full_name', 'Nama Lengkap', 'trim|required|min_length[3]|max_length[100]');
 		$this->form_validation->set_rules('username', 'Username', 'trim|min_length[3]|max_length[50]|regex_match[/^[A-Za-z0-9._-]+$/]');
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|max_length[150]');
+		$this->form_validation->set_rules('phone', 'Nomor Telepon', 'trim|max_length[25]|regex_match[/^[0-9+\-()\s]*$/]');
 		// Empty, non-required values are skipped by the validator, so a blank
 		// password simply means "keep the current one".
 		$this->form_validation->set_rules('password', 'Password Baru', 'trim|min_length[8]|max_length[72]');
@@ -156,6 +157,7 @@ class Users extends Admin_Controller
 		$full_name = trim((string) $this->input->post('full_name', TRUE));
 		$username  = strtolower(trim((string) $this->input->post('username', TRUE)));
 		$email     = strtolower(trim((string) $this->input->post('email', TRUE)));
+		$phone     = trim((string) $this->input->post('phone', TRUE));
 		$password  = (string) $this->input->post('password', FALSE);
 
 		if ($username !== '' && $this->user_model->username_exists($username, $user['id']))
@@ -172,10 +174,21 @@ class Users extends Admin_Controller
 			return;
 		}
 
+		$avatar = save_user_avatar($user['avatar']);
+
+		if ($avatar === FALSE)
+		{
+			$this->render_form($user, 'Gagal mengunggah foto profil: '.strip_tags($this->upload->display_errors('', '')));
+
+			return;
+		}
+
 		$this->user_model->update($user['id'], array(
 			'full_name' => $full_name,
 			'username'  => $username,
 			'email'     => $email,
+			'phone'     => $phone,
+			'avatar'    => $avatar,
 		));
 
 		$is_self = ((int) $user['id'] === (int) $this->current_user['id']);
@@ -194,6 +207,16 @@ class Users extends Admin_Controller
 		if ((string) $user['email'] !== $email)
 		{
 			$changed[] = 'email';
+		}
+
+		if ((string) $user['phone'] !== $phone)
+		{
+			$changed[] = 'nomor telepon';
+		}
+
+		if ((string) $user['avatar'] !== (string) $avatar)
+		{
+			$changed[] = 'foto profil';
 		}
 
 		if ($password !== '')

@@ -56,6 +56,7 @@ class Profile extends Admin_Controller
 		$this->form_validation->set_rules('full_name', 'Nama Lengkap', 'trim|required|min_length[3]|max_length[100]');
 		$this->form_validation->set_rules('username', 'Username', 'trim|min_length[3]|max_length[50]|regex_match[/^[A-Za-z0-9._-]+$/]');
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|max_length[150]');
+		$this->form_validation->set_rules('phone', 'Nomor Telepon', 'trim|max_length[25]|regex_match[/^[0-9+\-()\s]*$/]');
 
 		if ($this->form_validation->run() === FALSE)
 		{
@@ -65,6 +66,7 @@ class Profile extends Admin_Controller
 		$full_name = (string) $this->input->post('full_name', TRUE);
 		$username  = strtolower(trim((string) $this->input->post('username', TRUE)));
 		$email     = strtolower(trim((string) $this->input->post('email', TRUE)));
+		$phone     = trim((string) $this->input->post('phone', TRUE));
 
 		// The username is an optional alias, but it may never collide.
 		if ($username !== '' && $this->user_model->username_exists($username, $user['id']))
@@ -77,10 +79,19 @@ class Profile extends Admin_Controller
 			$this->redirect_with('admin/profile', 'error', 'Email tersebut sudah dipakai akun lain.');
 		}
 
+		$avatar = save_user_avatar($user['avatar']);
+
+		if ($avatar === FALSE)
+		{
+			$this->redirect_with('admin/profile', 'error', 'Gagal mengunggah foto profil: '.strip_tags($this->upload->display_errors('', '')));
+		}
+
 		$this->user_model->update($user['id'], array(
 			'full_name' => $full_name,
 			'username'  => $username,
 			'email'     => $email,
+			'phone'     => $phone,
+			'avatar'    => $avatar,
 		));
 
 		// Keep the header/session in sync straight away.
@@ -101,6 +112,16 @@ class Profile extends Admin_Controller
 		if ((string) $user['email'] !== $email)
 		{
 			$changed[] = 'email';
+		}
+
+		if ((string) $user['phone'] !== $phone)
+		{
+			$changed[] = 'nomor telepon';
+		}
+
+		if ((string) $user['avatar'] !== (string) $avatar)
+		{
+			$changed[] = 'foto profil';
 		}
 
 		$note = empty($changed) ? 'Tidak ada perubahan yang disimpan.' : 'Berhasil memperbarui '.implode(', ', $changed).'.';

@@ -20,17 +20,51 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<?php echo role_badge($current_user['role']); ?>
 		</div>
 
-		<?php echo form_open('account/profile'); ?>
+		<div class="profile-identity mb-3">
+			<?php $avatar = avatar_url($current_user['avatar']); ?>
+			<?php if ($avatar): ?>
+				<span class="avatar avatar-lg"><img src="<?php echo html_escape($avatar); ?>" alt="Foto profil <?php echo html_escape($current_user['full_name']); ?>"></span>
+			<?php else: ?>
+				<span class="avatar avatar-lg"><?php echo html_escape(initials_of($current_user['full_name'])); ?></span>
+			<?php endif; ?>
+			<div>
+				<strong class="profile-name"><?php echo html_escape($current_user['full_name']); ?></strong>
+				<div class="cell-sub"><?php echo html_escape($current_user['email']); ?></div>
+				<div class="cell-sub"><?php echo ! empty($current_user['phone']) ? html_escape($current_user['phone']) : '<span class="text-dim">Nomor belum diisi</span>'; ?></div>
+			</div>
+		</div>
+
+		<?php echo form_open_multipart('account/profile'); ?>
 			<input type="hidden" name="action" value="profile">
+
+			<div class="form-group">
+				<label for="avatar_file">Foto Profil</label>
+				<input type="file" id="avatar_file" name="avatar_file" accept="image/jpeg,image/png,image/webp,image/gif">
+				<div class="form-hint">Format JPG, PNG, WEBP, atau GIF. Ukuran maksimal 2 MB.</div>
+				<?php if ( ! empty($current_user['avatar'])): ?>
+					<label class="checkbox mt-2">
+						<input type="checkbox" name="remove_avatar" value="1">
+						<span>Hapus foto profil saat ini</span>
+					</label>
+				<?php endif; ?>
+			</div>
 
 			<div class="form-group">
 				<label for="full_name">Nama Lengkap <span class="req">*</span></label>
 				<input type="text" id="full_name" name="full_name" value="<?php echo html_escape($current_user['full_name']); ?>" required>
 			</div>
 
-			<div class="form-group">
-				<label for="email">Email <span class="req">*</span></label>
-				<input type="email" id="email" name="email" value="<?php echo html_escape($current_user['email']); ?>" required>
+			<div class="form-row">
+				<div class="form-group">
+					<label for="email">Email <span class="req">*</span></label>
+					<input type="email" id="email" name="email" value="<?php echo html_escape($current_user['email']); ?>" required>
+				</div>
+
+				<div class="form-group">
+					<label for="phone">Nomor Telepon / WhatsApp</label>
+					<input type="tel" id="phone" name="phone" value="<?php echo html_escape($current_user['phone']); ?>" placeholder="mis. 08123456789" autocomplete="tel">
+					<div class="form-hint">Dipakai untuk keperluan pesanan dan dukungan.</div>
+				</div>
 			</div>
 
 			<button type="submit" class="btn btn-primary">Simpan Perubahan</button>

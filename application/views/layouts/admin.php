@@ -88,7 +88,17 @@ $is_active = function ($needle) {
 				<h1><?php echo html_escape(isset($content_title) ? $content_title : $page_title); ?></h1>
 				<span class="spacer"></span>
 				<?php $this->load->view('layouts/partials/theme_picker'); ?>
-				<a class="badge badge-accent" href="<?php echo site_url('admin/profile'); ?>" title="Pengaturan akun"><?php echo html_escape($admin_user['full_name']); ?></a>
+				<?php $topbar_avatar = avatar_url($admin_user['avatar']); ?>
+				<a class="admin-user" href="<?php echo site_url('admin/profile'); ?>" title="Pengaturan akun">
+					<span class="avatar avatar-sm">
+						<?php if ($topbar_avatar): ?>
+							<img src="<?php echo html_escape($topbar_avatar); ?>" alt="">
+						<?php else: ?>
+							<?php echo html_escape(initials_of($admin_user['full_name'])); ?>
+						<?php endif; ?>
+					</span>
+					<span><?php echo html_escape($admin_user['full_name']); ?></span>
+				</a>
 			</header>
 
 			<div class="admin-content">

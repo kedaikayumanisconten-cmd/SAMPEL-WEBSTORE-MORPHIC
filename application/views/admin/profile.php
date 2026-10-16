@@ -17,7 +17,12 @@ $has_username = ! empty($account['username']);
 		</div>
 
 		<div class="profile-identity">
-			<span class="avatar avatar-lg"><?php echo html_escape(initials_of($account['full_name'])); ?></span>
+			<?php $avatar = avatar_url($account['avatar']); ?>
+			<?php if ($avatar): ?>
+				<span class="avatar avatar-lg"><img src="<?php echo html_escape($avatar); ?>" alt="Foto profil <?php echo html_escape($account['full_name']); ?>"></span>
+			<?php else: ?>
+				<span class="avatar avatar-lg"><?php echo html_escape(initials_of($account['full_name'])); ?></span>
+			<?php endif; ?>
 			<div>
 				<strong class="profile-name"><?php echo html_escape($account['full_name']); ?></strong>
 				<div class="profile-handle">
@@ -28,10 +33,14 @@ $has_username = ! empty($account['username']);
 					<?php endif; ?>
 				</div>
 				<div class="cell-sub"><?php echo html_escape($account['email']); ?></div>
+				<?php if ( ! empty($account['phone'])): ?>
+					<div class="cell-sub"><?php echo html_escape($account['phone']); ?></div>
+				<?php endif; ?>
 			</div>
 		</div>
 
 		<ul class="spec-list mt-2">
+			<li><span class="spec-key">Nomor telepon</span><span class="spec-val"><?php echo ! empty($account['phone']) ? html_escape($account['phone']) : '<span class="text-dim">Belum diisi</span>'; ?></span></li>
 			<li><span class="spec-key">Status akun</span><span class="spec-val"><?php echo (int) $account['is_active'] === 1 ? '<span class="badge badge-success">Aktif</span>' : '<span class="badge badge-danger">Nonaktif</span>'; ?></span></li>
 			<li><span class="spec-key">Login terakhir</span><span class="spec-val"><?php echo $account['last_login_at'] ? html_escape(datetime_id($account['last_login_at'])) : '<span class="text-dim">Belum pernah</span>'; ?></span></li>
 			<li><span class="spec-key">Terdaftar sejak</span><span class="spec-val"><?php echo html_escape(datetime_id($account['created_at'], FALSE)); ?></span></li>
@@ -56,8 +65,20 @@ $has_username = ! empty($account['username']);
 
 		<p class="text-muted"><small>Username dan email sama-sama bisa dipakai untuk masuk ke panel admin.</small></p>
 
-		<?php echo form_open('admin/profile'); ?>
+		<?php echo form_open_multipart('admin/profile'); ?>
 			<input type="hidden" name="action" value="account">
+
+			<div class="form-group">
+				<label for="avatar_file">Foto Profil</label>
+				<input type="file" id="avatar_file" name="avatar_file" accept="image/jpeg,image/png,image/webp,image/gif">
+				<div class="form-hint">Format JPG, PNG, WEBP, atau GIF. Ukuran maksimal 2 MB.</div>
+				<?php if ( ! empty($account['avatar'])): ?>
+					<label class="checkbox mt-2">
+						<input type="checkbox" name="remove_avatar" value="1">
+						<span>Hapus foto profil saat ini</span>
+					</label>
+				<?php endif; ?>
+			</div>
 
 			<div class="form-group">
 				<label for="full_name">Nama Lengkap <span class="req">*</span></label>
@@ -77,6 +98,12 @@ $has_username = ! empty($account['username']);
 				<label for="email">Email <span class="req">*</span></label>
 				<input type="email" id="email" name="email" value="<?php echo html_escape(set_value('email', $account['email'])); ?>" required autocomplete="email">
 				<div class="form-hint">Dipakai untuk login dan menerima notifikasi pesanan.</div>
+			</div>
+
+			<div class="form-group">
+				<label for="phone">Nomor Telepon / WhatsApp</label>
+				<input type="tel" id="phone" name="phone" value="<?php echo html_escape(set_value('phone', $account['phone'])); ?>" placeholder="mis. 08123456789" autocomplete="tel">
+				<div class="form-hint">Hanya angka, spasi, dan simbol + - ( ).</div>
 			</div>
 
 			<button type="submit" class="btn btn-primary">Simpan Perubahan</button>

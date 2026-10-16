@@ -115,6 +115,7 @@ class Auth extends Frontend_Controller
 		$this->form_validation->set_rules('full_name', 'Nama Lengkap', 'trim|required|min_length[3]|max_length[100]');
 		$this->form_validation->set_rules('username', 'Username', 'trim|min_length[3]|max_length[50]|regex_match[/^[A-Za-z0-9._-]+$/]');
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|max_length[150]');
+		$this->form_validation->set_rules('phone', 'Nomor Telepon', 'trim|max_length[25]|regex_match[/^[0-9+\-()\s]*$/]');
 		$this->form_validation->set_rules('password', 'Password', 'required|min_length[8]|max_length[72]');
 		$this->form_validation->set_rules('password_confirm', 'Konfirmasi Password', 'required|matches[password]');
 		$this->form_validation->set_rules('terms', 'Syarat & Ketentuan', 'required');
@@ -146,6 +147,7 @@ class Auth extends Frontend_Controller
 			'full_name' => (string) $this->input->post('full_name', TRUE),
 			'username'  => $username,
 			'email'     => $email,
+			'phone'     => (string) $this->input->post('phone', TRUE),
 			'password'  => (string) $this->input->post('password', FALSE),
 			'role'      => 'customer',
 		));

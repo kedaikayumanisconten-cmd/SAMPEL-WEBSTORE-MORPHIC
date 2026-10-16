@@ -47,7 +47,7 @@ $temp_password = $this->session->flashdata('temp_password');
 <?php echo form_open('admin/users/generate_password/'.$user['id'], array('id' => 'genpass-form')); ?>
 <?php echo form_close(); ?>
 
-<?php echo form_open('admin/users/update/'.$user['id']); ?>
+<?php echo form_open_multipart('admin/users/update/'.$user['id']); ?>
 	<div class="grid grid-2">
 		<!-- ======================= LEFT: identity ======================= -->
 		<div>
@@ -58,7 +58,12 @@ $temp_password = $this->session->flashdata('temp_password');
 				</div>
 
 				<div class="profile-identity mb-3">
-					<span class="avatar avatar-lg"><?php echo html_escape(initials_of($user['full_name'])); ?></span>
+					<?php $avatar = avatar_url($user['avatar']); ?>
+					<?php if ($avatar): ?>
+						<span class="avatar avatar-lg"><img src="<?php echo html_escape($avatar); ?>" alt="Foto profil <?php echo html_escape($user['full_name']); ?>"></span>
+					<?php else: ?>
+						<span class="avatar avatar-lg"><?php echo html_escape(initials_of($user['full_name'])); ?></span>
+					<?php endif; ?>
 					<div>
 						<strong class="profile-name"><?php echo html_escape($user['full_name']); ?></strong>
 						<div class="profile-handle">
@@ -69,7 +74,22 @@ $temp_password = $this->session->flashdata('temp_password');
 							<?php endif; ?>
 						</div>
 						<div class="cell-sub"><?php echo html_escape($user['email']); ?></div>
+						<?php if ( ! empty($user['phone'])): ?>
+							<div class="cell-sub"><?php echo html_escape($user['phone']); ?></div>
+						<?php endif; ?>
 					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="avatar_file">Foto Profil</label>
+					<input type="file" id="avatar_file" name="avatar_file" accept="image/jpeg,image/png,image/webp,image/gif">
+					<div class="form-hint">Format JPG, PNG, WEBP, atau GIF. Ukuran maksimal 2 MB.</div>
+					<?php if ( ! empty($user['avatar'])): ?>
+						<label class="checkbox mt-2">
+							<input type="checkbox" name="remove_avatar" value="1">
+							<span>Hapus foto profil saat ini</span>
+						</label>
+					<?php endif; ?>
 				</div>
 
 				<div class="form-group">
@@ -90,6 +110,12 @@ $temp_password = $this->session->flashdata('temp_password');
 					<label for="email">Email <span class="req">*</span></label>
 					<input type="email" id="email" name="email" value="<?php echo html_escape($value('email')); ?>" required autocomplete="email">
 					<div class="form-hint">Email dan username sama-sama bisa dipakai untuk login.</div>
+				</div>
+
+				<div class="form-group">
+					<label for="phone">Nomor Telepon / WhatsApp</label>
+					<input type="tel" id="phone" name="phone" value="<?php echo html_escape($value('phone')); ?>" placeholder="mis. 08123456789" autocomplete="tel">
+					<div class="form-hint">Hanya angka, spasi, dan simbol + - ( ).</div>
 				</div>
 			</section>
 		</div>

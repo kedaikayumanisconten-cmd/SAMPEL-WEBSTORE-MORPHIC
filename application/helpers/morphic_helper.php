@@ -579,6 +579,114 @@ if ( ! function_exists('initials_of'))
 	}
 }
 
+if ( ! function_exists('avatar_url'))
+{
+	/**
+	 * Resolve a stored profile photo reference into a renderable URL.
+	 *
+	 * Accepts a repository relative path (assets/uploads/avatars/...) or an
+	 * absolute external URL, and returns NULL when there is nothing to show
+	 * so the view can fall back to the initials placeholder.
+	 *
+	 * @param  string|null $value
+	 * @return string|null
+	 */
+	function avatar_url($value)
+	{
+		return product_image_url($value);
+	}
+}
+
+if ( ! function_exists('save_user_avatar'))
+{
+	/**
+	 * Handle a profile photo upload for the current request.
+	 *
+	 * Looks at the `remove_avatar` flag and the named file field, stores the
+	 * new file under the configured avatar folder and deletes the previous
+	 * local file. Callers receive:
+	 *   - the old path when nothing was submitted (keep),
+	 *   - NULL when the photo was explicitly removed,
+	 *   - the new relative path after a successful upload,
+	 *   - FALSE when the upload failed (error text lives in $upload).
+	 *
+	 * @param  string|null $old_path
+	 * @param  string      $field
+	 * @return string|null|false
+	 */
+	function save_user_avatar($old_path, $field = 'avatar_file')
+	{
+		$ci =& get_instance();
+		$ci->load->library('upload');
+
+		if ((string) $ci->input->post('remove_avatar', TRUE) !== '')
+		{
+			delete_user_avatar($old_path);
+
+			return NULL;
+		}
+
+		if (empty($_FILES[$field]['name']))
+		{
+			return $old_path;
+		}
+
+		$path = (string) $ci->config->item('upload_avatar_path');
+		$path = ($path !== '') ? $path : 'assets/uploads/avatars/';
+
+		if ( ! is_dir(FCPATH.$path))
+		{
+			@mkdir(FCPATH.$path, 0755, TRUE);
+		}
+
+		$ci->upload->initialize(array(
+			'upload_path'   => FCPATH.$path,
+			'allowed_types' => 'jpg|jpeg|png|webp|gif|avif',
+			'max_size'      => 2048, // 2 MB
+			'file_name'     => 'avatar_'.date('Ymd_His').'_'.bin2hex(random_bytes(3)),
+			'overwrite'     => FALSE,
+		));
+
+		if ( ! $ci->upload->do_upload($field))
+		{
+			return FALSE;
+		}
+
+		$file = $ci->upload->data();
+
+		delete_user_avatar($old_path);
+
+		return $path.$file['file_name'];
+	}
+}
+
+if ( ! function_exists('delete_user_avatar'))
+{
+	/**
+	 * Remove a previously uploaded local avatar file. Remote URLs and files
+	 * living outside the avatar folder are left untouched.
+	 *
+	 * @param  string|null $path
+	 * @return void
+	 */
+	function delete_user_avatar($path)
+	{
+		if (empty($path) || is_remote_url($path))
+		{
+			return;
+		}
+
+		$ci     =& get_instance();
+		$prefix = (string) $ci->config->item('upload_avatar_path');
+		$prefix = ($prefix !== '') ? $prefix : 'assets/uploads/avatars/';
+
+		if (strpos($path, $prefix) === 0 && is_file(FCPATH.$path))
+		{
+			@unlink(FCPATH.$path);
+		}
+	}
+}
+
 if ( ! function_exists('datetime_id'))
 {
 	/**

@@ -66,6 +66,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					</a>
 
 					<?php if ($is_logged_in): ?>
+						<?php $nav_avatar = avatar_url($current_user['avatar']); ?>
+						<a class="avatar avatar-sm" href="<?php echo site_url('account/profile'); ?>" title="Profil <?php echo html_escape($current_user['full_name']); ?>" aria-label="Buka profil">
+							<?php if ($nav_avatar): ?>
+								<img src="<?php echo html_escape($nav_avatar); ?>" alt="">
+							<?php else: ?>
+								<?php echo html_escape(initials_of($current_user['full_name'])); ?>
+							<?php endif; ?>
+						</a>
 						<a class="btn btn-primary btn-sm" href="<?php echo site_url('library'); ?>">Library Saya</a>
 						<a class="btn btn-ghost btn-sm" href="<?php echo site_url('logout'); ?>" data-confirm="Keluar dari akun Anda?">Keluar</a>
 					<?php else: ?>

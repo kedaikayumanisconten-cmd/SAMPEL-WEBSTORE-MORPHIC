@@ -22,6 +22,38 @@
 	}
 
 	/**
+	 * Close the header category dropdown when clicking outside it or pressing
+	 * Escape (native <details> keeps itself open otherwise).
+	 */
+	function initNavDropdowns() {
+		var dropdowns = document.querySelectorAll('.nav-dropdown');
+
+		if (!dropdowns.length) {
+			return;
+		}
+
+		document.addEventListener('click', function (event) {
+			dropdowns.forEach(function (dropdown) {
+				if (dropdown.open && !dropdown.contains(event.target)) {
+					dropdown.removeAttribute('open');
+				}
+			});
+		});
+
+		document.addEventListener('keydown', function (event) {
+			if (event.key !== 'Escape') {
+				return;
+			}
+
+			dropdowns.forEach(function (dropdown) {
+				if (dropdown.open) {
+					dropdown.removeAttribute('open');
+				}
+			});
+		});
+	}
+
+	/**
 	 * Collapsible sidebar used by the admin panel on small screens.
 	 */
 	function initSidebarToggle() {
@@ -370,6 +402,7 @@
 
 	document.addEventListener('DOMContentLoaded', function () {
 		initNavToggle();
+		initNavDropdowns();
 		initSidebarToggle();
 		initCopyButtons();
 		initConfirmLinks();

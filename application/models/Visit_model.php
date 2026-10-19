@@ -300,7 +300,7 @@ class Visit_model extends CI_Model
 		foreach ($rows as $row)
 		{
 			$out[] = array(
-				'label' => trim(strip_tags(str_replace('&#', '', device_label($row['device'])))),
+				'label' => device_name($row['device']),
 				'value' => (int) $row['hits'],
 			);
 		}

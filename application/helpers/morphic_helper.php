@@ -574,7 +574,7 @@ if ( ! function_exists('excerpt'))
 	 */
 	function excerpt($text, $limit = 120)
 	{
-		return character_limiter(strip_tags((string) $text), $limit, '&hellip;');
+		return character_limiter(strip_tags((string) $text), $limit, '…');
 	}
 }
 

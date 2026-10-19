@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<?php echo form_open('login'); ?>
 			<div class="form-group">
 				<label for="email">Email atau Username <span class="req">*</span></label>
-				<input type="text" id="email" name="email" value="<?php echo html_escape(set_value('email')); ?>" placeholder="nama@email.com atau username" required autofocus>
+				<input type="text" id="email" name="email" value="<?php echo html_escape(set_value('email', '', FALSE)); ?>" placeholder="nama@email.com atau username" required autofocus>
 			</div>
 
 			<div class="form-group">

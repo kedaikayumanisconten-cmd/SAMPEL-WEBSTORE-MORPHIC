@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @var string      $upload_path Upload directory for the logo.
  */
 $val = function ($field) use ($values) {
-	return set_value($field, isset($values[$field]) ? $values[$field] : '');
+	return set_value($field, isset($values[$field]) ? $values[$field] : '', FALSE);
 };
 ?>
 <div class="card mb-3">

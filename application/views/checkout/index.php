@@ -75,7 +75,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<div class="card-head">
 					<h3>3. Catatan tambahan <span class="text-dim"><small>(opsional)</small></span></h3>
 				</div>
-				<textarea name="notes" maxlength="500" placeholder="Contoh: mohon faktur atas nama PT ..."><?php echo html_escape(set_value('notes')); ?></textarea>
+				<textarea name="notes" maxlength="500" placeholder="Contoh: mohon faktur atas nama PT ..."><?php echo html_escape(set_value('notes', '', FALSE)); ?></textarea>
 			</div>
 		</div>
 

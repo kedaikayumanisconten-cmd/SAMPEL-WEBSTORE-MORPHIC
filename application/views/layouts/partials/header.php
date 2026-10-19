@@ -43,9 +43,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 				<nav class="main-nav" id="main-nav" aria-label="Navigasi utama">
 					<a href="<?php echo site_url('products'); ?>" class="<?php echo $this->uri->segment(1) === 'products' || $this->uri->segment(1) === 'product' ? 'is-active' : ''; ?>">Semua Produk</a>
-					<?php foreach (array_slice($nav_categories, 0, 3) as $nav_category): ?>
-						<a href="<?php echo site_url('category/'.$nav_category['slug']); ?>"><?php echo html_escape($nav_category['name']); ?></a>
-					<?php endforeach; ?>
+
+					<?php if ( ! empty($nav_categories)): ?>
+						<details class="nav-dropdown">
+							<summary>Kategori</summary>
+							<div class="nav-dropdown-menu">
+								<?php foreach ($nav_categories as $nav_category): ?>
+									<a href="<?php echo site_url('category/'.$nav_category['slug']); ?>"><?php echo html_escape($nav_category['name']); ?></a>
+								<?php endforeach; ?>
+							</div>
+						</details>
+					<?php endif; ?>
 					<?php if ($is_admin): ?>
 						<a href="<?php echo site_url('admin'); ?>">Admin</a>
 					<?php endif; ?>

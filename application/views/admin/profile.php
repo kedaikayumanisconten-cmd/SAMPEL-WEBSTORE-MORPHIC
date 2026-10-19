@@ -82,27 +82,27 @@ $has_username = ! empty($account['username']);
 
 			<div class="form-group">
 				<label for="full_name">Nama Lengkap <span class="req">*</span></label>
-				<input type="text" id="full_name" name="full_name" value="<?php echo html_escape(set_value('full_name', $account['full_name'])); ?>" required>
+				<input type="text" id="full_name" name="full_name" value="<?php echo html_escape(set_value('full_name', $account['full_name'], FALSE)); ?>" required>
 			</div>
 
 			<div class="form-group">
 				<label for="username">Username</label>
 				<div class="input-prefix">
 					<span>@</span>
-					<input type="text" id="username" name="username" value="<?php echo html_escape(set_value('username', $account['username'])); ?>" placeholder="admin" autocomplete="username">
+					<input type="text" id="username" name="username" value="<?php echo html_escape(set_value('username', $account['username'], FALSE)); ?>" placeholder="admin" autocomplete="username">
 				</div>
 				<div class="form-hint">Huruf, angka, titik, garis bawah, dan strip. Minimal 3 karakter. Kosongkan untuk menghapus username.</div>
 			</div>
 
 			<div class="form-group">
 				<label for="email">Email <span class="req">*</span></label>
-				<input type="email" id="email" name="email" value="<?php echo html_escape(set_value('email', $account['email'])); ?>" required autocomplete="email">
+				<input type="email" id="email" name="email" value="<?php echo html_escape(set_value('email', $account['email'], FALSE)); ?>" required autocomplete="email">
 				<div class="form-hint">Dipakai untuk login dan menerima notifikasi pesanan.</div>
 			</div>
 
 			<div class="form-group">
 				<label for="phone">Nomor Telepon / WhatsApp</label>
-				<input type="tel" id="phone" name="phone" value="<?php echo html_escape(set_value('phone', $account['phone'])); ?>" placeholder="mis. 08123456789" autocomplete="tel">
+				<input type="tel" id="phone" name="phone" value="<?php echo html_escape(set_value('phone', $account['phone'], FALSE)); ?>" placeholder="mis. 08123456789" autocomplete="tel">
 				<div class="form-hint">Hanya angka, spasi, dan simbol + - ( ).</div>
 			</div>
 

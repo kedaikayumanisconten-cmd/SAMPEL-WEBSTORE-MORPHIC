@@ -56,7 +56,12 @@ class Setting_model extends CI_Model
 
 		foreach ($rows as $row)
 		{
-			$this->values[$row['setting_key']] = $row['setting_value'];
+			// Stored values are plain text. Decode any HTML entities so older
+			// rows that were saved pre-escaped (e.g. "&amp;") render once,
+			// not as literal entity text after the view escapes them again.
+			$this->values[$row['setting_key']] = $row['setting_value'] === NULL
+				? NULL
+				: html_entity_decode((string) $row['setting_value'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
 		}
 
 		return $this->values;
@@ -107,11 +112,19 @@ class Setting_model extends CI_Model
 
 		foreach ($pairs as $key => $value)
 		{
+			// Keep the database plain-text so a single html_escape() at the
+			// output layer is always enough, even if an admin pastes an
+			// entity such as "&amp;" into a settings field.
+			if ($value !== NULL)
+			{
+				$value = html_entity_decode((string) $value, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+			}
+
 			$this->db->query(
 				'INSERT INTO `'.$this->table.'` (`setting_key`, `setting_value`, `updated_at`) '
 				.'VALUES (?, ?, NOW()) '
 				.'ON DUPLICATE KEY UPDATE `setting_value` = VALUES(`setting_value`), `updated_at` = NOW()',
-				array((string) $key, $value === NULL ? NULL : (string) $value)
+				array((string) $key, $value)
 			);
 		}
 

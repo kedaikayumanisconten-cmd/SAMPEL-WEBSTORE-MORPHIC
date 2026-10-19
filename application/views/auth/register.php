@@ -17,25 +17,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<?php echo form_open('register'); ?>
 			<div class="form-group">
 				<label for="full_name">Nama Lengkap <span class="req">*</span></label>
-				<input type="text" id="full_name" name="full_name" value="<?php echo html_escape(set_value('full_name')); ?>" placeholder="Nama Anda" required autofocus>
+				<input type="text" id="full_name" name="full_name" value="<?php echo html_escape(set_value('full_name', '', FALSE)); ?>" placeholder="Nama Anda" required autofocus>
 			</div>
 
 			<div class="form-row">
 				<div class="form-group">
 					<label for="username">Username <span class="text-dim">(opsional)</span></label>
-					<input type="text" id="username" name="username" value="<?php echo html_escape(set_value('username')); ?>" placeholder="mis. raka_editor">
+					<input type="text" id="username" name="username" value="<?php echo html_escape(set_value('username', '', FALSE)); ?>" placeholder="mis. raka_editor">
 					<div class="form-hint">Bisa dipakai untuk masuk sebagai pengganti email.</div>
 				</div>
 
 				<div class="form-group">
 					<label for="email">Email <span class="req">*</span></label>
-					<input type="email" id="email" name="email" value="<?php echo html_escape(set_value('email')); ?>" placeholder="nama@email.com" required>
+					<input type="email" id="email" name="email" value="<?php echo html_escape(set_value('email', '', FALSE)); ?>" placeholder="nama@email.com" required>
 				</div>
 			</div>
 
 			<div class="form-group">
 				<label for="phone">Nomor Telepon / WhatsApp <span class="text-dim">(opsional)</span></label>
-				<input type="tel" id="phone" name="phone" value="<?php echo html_escape(set_value('phone')); ?>" placeholder="mis. 08123456789" autocomplete="tel">
+				<input type="tel" id="phone" name="phone" value="<?php echo html_escape(set_value('phone', '', FALSE)); ?>" placeholder="mis. 08123456789" autocomplete="tel">
 				<div class="form-hint">Bisa diubah kapan saja dari halaman profil.</div>
 			</div>
 

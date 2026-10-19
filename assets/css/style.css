@@ -343,10 +343,69 @@ small { font-size: .82em; }
 /* Account links live in the mobile drawer, not the desktop bar */
 .nav-account { display: none; }
 
+/* Compact category menu keeps the desktop bar within the container width */
+.nav-dropdown { position: relative; }
+.nav-dropdown > summary {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 7px;
+	list-style: none;
+	cursor: pointer;
+	padding: 9px 14px;
+	border-radius: 9999px;
+	color: var(--n400);
+	font-weight: 600;
+	font-size: .875rem;
+	white-space: nowrap;
+	transition: color .15s ease, background .15s ease;
+}
+.nav-dropdown > summary::-webkit-details-marker { display: none; }
+.nav-dropdown > summary::marker { content: ""; }
+.nav-dropdown > summary::after {
+	content: "";
+	width: 6px; height: 6px;
+	margin-top: -2px;
+	border-right: 1.5px solid currentColor;
+	border-bottom: 1.5px solid currentColor;
+	transform: rotate(45deg);
+	transition: transform .15s ease;
+}
+.nav-dropdown[open] > summary::after { transform: rotate(225deg); margin-top: 3px; }
+.nav-dropdown > summary:hover,
+.nav-dropdown[open] > summary { background: rgba(255, 255, 255, .07); color: #fff; }
+
+.nav-dropdown-menu {
+	position: absolute;
+	top: calc(100% + 10px);
+	left: 0;
+	z-index: 80;
+	display: grid;
+	gap: 2px;
+	min-width: 240px;
+	max-width: 320px;
+	padding: 8px;
+	background: #0f1521;
+	border: 1px solid rgba(255, 255, 255, .12);
+	border-radius: 14px;
+	box-shadow: 0 18px 40px -12px rgba(0, 0, 0, .8);
+}
+.nav-dropdown:not([open]) .nav-dropdown-menu { display: none; }
+.nav-dropdown-menu a {
+	padding: 10px 12px;
+	border-radius: 10px;
+	color: rgba(255, 255, 255, .72);
+	font-size: .84rem;
+	font-weight: 600;
+	line-height: 1.35;
+	white-space: normal;
+}
+.nav-dropdown-menu a:hover { background: rgba(255, 255, 255, .08); color: #fff; }
+
 .header-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; justify-self: end; }
 
 .header-search { position: relative; display: flex; align-items: center; min-width: 0; }
-.header-search input {
+.site-header .header-search input {
 	width: 200px;
 	max-width: 100%;
 	height: 40px;
@@ -359,7 +418,7 @@ small { font-size: .82em; }
 	transition: width .2s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
 }
 .header-search input::placeholder { color: rgba(255, 255, 255, .45); }
-.header-search input:focus {
+.site-header .header-search input:focus {
 	outline: none;
 	width: 250px;
 	background: rgba(255, 255, 255, .1);
@@ -802,7 +861,7 @@ label, .form-label { display: block; font-size: .84rem; font-weight: 600; color:
 label .req { color: var(--danger); }
 
 input[type="text"], input[type="email"], input[type="password"], input[type="number"],
-input[type="search"], input[type="url"], input[type="file"], input[type="date"], select, textarea {
+input[type="search"], input[type="tel"], input[type="url"], input[type="file"], input[type="date"], select, textarea {
 	width: 100%;
 	padding: 11px 14px;
 	background: var(--n50);
@@ -1372,7 +1431,7 @@ table.data .cell-sub { color: var(--text-dim); font-size: .78rem; }
 
 .scroll-x { overflow-x: auto; }
 
-@media (max-width: 1120px) {
+@media (max-width: 1180px) {
 	.header-search { display: none; }
 }
 
@@ -1394,6 +1453,8 @@ table.data .cell-sub { color: var(--text-dim); font-size: .78rem; }
 	.main-nav.is-open {
 		display: flex; flex-direction: column; align-items: stretch;
 		position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+		width: 100%; max-width: none;
+		justify-self: stretch;
 		z-index: 1;
 		background: rgba(11, 15, 23, .98);
 		-webkit-backdrop-filter: blur(16px);
@@ -1403,6 +1464,17 @@ table.data .cell-sub { color: var(--text-dim); font-size: .78rem; }
 		overflow-y: auto;
 	}
 	.main-nav.is-open a { font-size: 1.1rem; padding: 14px 16px; }
+	.main-nav.is-open .nav-dropdown { width: 100%; }
+	.main-nav.is-open .nav-dropdown > summary { font-size: 1.1rem; padding: 14px 16px; }
+	.main-nav.is-open .nav-dropdown-menu {
+		position: static;
+		min-width: 0; max-width: none;
+		margin: 4px 0 6px 12px; padding: 0;
+		background: transparent;
+		border: 0;
+		box-shadow: none;
+	}
+	.main-nav.is-open .nav-dropdown-menu a { font-size: 1rem; padding: 11px 16px; }
 	.nav-account {
 		display: flex; flex-direction: column; gap: 4px;
 		margin-top: 14px; padding-top: 14px;

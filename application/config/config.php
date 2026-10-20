@@ -22,8 +22,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | If you need to allow multiple domains, remember that this file is still
 | a PHP script and you can easily do that on your own.
 |
+| M.O.R.P.H.I.C: the URL is detected automatically, so this checkout runs on
+| http://localhost/MORPHIC/ as well as on a live domain (root or subfolder)
+| without editing this file. To force a specific URL set the APP_BASE_URL
+| environment variable, e.g. in .htaccess:
+|
+|	SetEnv APP_BASE_URL https://morphic.store/
+|
 */
 $config['base_url'] = 'http://localhost/MORPHIC/';
+
+if (($app_base_url = getenv('APP_BASE_URL')) !== FALSE && $app_base_url !== '')
+{
+	$config['base_url'] = rtrim($app_base_url, '/').'/';
+}
+elseif ( ! empty($_SERVER['HTTP_HOST']) && preg_match('/^[a-z0-9.\-:\[\]]+$/i', $_SERVER['HTTP_HOST']))
+{
+	$app_https = (( ! empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off')
+		OR (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']) === 'https'));
+
+	$app_base_path = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
+	$app_base_path = ($app_base_path === '/' OR $app_base_path === '.') ? '/' : rtrim($app_base_path, '/').'/';
+
+	$config['base_url'] = ($app_https ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST'].$app_base_path;
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -224,8 +246,11 @@ $config['allow_get_array'] = TRUE;
 | For a live site you'll usually only enable Errors (1) to be logged otherwise
 | your log files will fill up very fast.
 |
+| Errors are always logged in production so a blank page can still be
+| diagnosed through application/logs/. Keep development quiet.
+|
 */
-$config['log_threshold'] = 0;
+$config['log_threshold'] = (ENVIRONMENT === 'production') ? 1 : 0;
 
 /*
 |--------------------------------------------------------------------------
@@ -407,11 +432,16 @@ $config['sess_regenerate_destroy'] = FALSE;
 | Note: These settings (with the exception of 'cookie_prefix' and
 |       'cookie_httponly') will also affect sessions.
 |
+| 'cookie_secure' follows the current request: cookies are flagged Secure on
+| HTTPS (including hosts behind a proxy or CDN) and stay usable on plain
+| HTTP for local development.
+|
 */
 $config['cookie_prefix']	= '';
 $config['cookie_domain']	= '';
 $config['cookie_path']		= '/';
-$config['cookie_secure']	= FALSE;
+$config['cookie_secure']	= (( ! empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off')
+	OR (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']) === 'https'));
 $config['cookie_httponly'] 	= TRUE;
 $config['cookie_samesite'] 	= 'Lax';
 

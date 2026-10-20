@@ -27,7 +27,18 @@ RewriteEngine On
 	</IfModule>
 </Files>
 
+# Never expose the framework, the CLI tools, the private download storage or
+# locally built deployment archives.
+RewriteRule ^(?:application|system|tools|storage|dist)/ - [F,L]
+
+# No directory listings (Apache may ignore this if the host disallows Options).
+<IfModule mod_autoindex.c>
+	Options -Indexes
+</IfModule>
+
 # Force HTTPS on production (skip localhost so local dev keeps working).
+# Uncomment these three lines on the live server once the SSL certificate
+# is active. See DEPLOY.md, step 6.
 # RewriteCond %{HTTPS} off
 # RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)(:[0-9]+)?$ [NC]
 # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]

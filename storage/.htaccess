@@ -1,0 +1,9 @@
+# Private storage: nothing in here may be requested directly.
+# Product files are only streamed by the Download controller.
+<IfModule authz_core_module>
+	Require all denied
+</IfModule>
+<IfModule !authz_core_module>
+	Order allow,deny
+	Deny from all
+</IfModule>

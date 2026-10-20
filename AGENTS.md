@@ -4,9 +4,9 @@ M.O.R.P.H.I.C is a digital software/asset store built on **CodeIgniter 3**, PHP 
 
 ## Running it
 - Apache/XAMPP with `mod_rewrite`. `index_page` is empty and `.htaccess` sends everything through `index.php`.
-- Import the schema: `mysql -u root < database.sql` (creates `morphic_store`). DB credentials are hardcoded in `application/config/database.php` (`root`, empty password).
-- **Gotcha:** `application/config/config.php` `base_url` is still `http://localhost/BaseFullstackProject/`. This checkout is `MORPHIC`, so update `base_url` to the real folder or every generated/asset URL breaks.
-- Environment is selected by the `CI_ENV` server var in `index.php` (default `development`, which hides `E_DEPRECATED`/`E_USER_DEPRECATED` so CI3's dynamic-property notices don't flood pages). There are no per-environment config files.
+- Import the schema: `mysql -u root < database.sql` (creates `morphic_store`). For phpMyAdmin/shared hosting import `database_hosting.sql` into an already-created, selected database instead — it is generated from `database.sql` by `php tools/build_hosting_sql.php` (re-run after every schema change). DB credentials live in `application/config/database.php` and fall back to XAMPP defaults (`root`, empty password) but can be overridden with `DB_HOST`/`DB_USER`/`DB_PASS`/`DB_NAME`.
+- `base_url` in `application/config/config.php` is auto-detected from `HTTP_HOST` + the script directory, so the same checkout works at `http://localhost/MORPHIC/` and on a live domain (root or subfolder). `APP_BASE_URL` overrides it. `cookie_secure` follows HTTPS automatically.
+- Environment: `CI_ENV` wins if set; otherwise any host other than `localhost`/`127.0.0.1`/`::1` runs as `production` (errors hidden, `log_threshold` = 1), loopback runs `development` (hides `E_DEPRECATED`/`E_USER_DEPRECATED` so CI3's dynamic-property notices don't flood pages). There are no per-environment config files. `DEPLOY.md` has the full cPanel/phpMyAdmin deployment guide.
 - Timezone is pinned to `Asia/Jakarta` in `index.php` and the seeder to match MySQL's local clock. Keep new CLI scripts consistent.
 - Demo analytics data: `php tools/seed_demo_traffic.php [days] [hits]` or `--clear`. Reads `DB_HOST`/`DB_USER`/`DB_PASS`/`DB_NAME` env vars, else the XAMPP defaults.
 

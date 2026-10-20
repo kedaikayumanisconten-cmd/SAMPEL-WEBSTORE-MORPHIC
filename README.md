@@ -16,25 +16,35 @@ ditulis sendiri.
 
 ## 2. Instalasi
 
-1. Salin folder proyek ke `htdocs` (contoh: `C:\xampp\htdocs\BaseFullstackProject`).
-2. Impor skema + data contoh:
+1. Salin folder proyek ke `htdocs` (contoh: `C:\xampp\htdocs\MORPHIC`).
+2. Impor skema + data contoh. Pilih salah satu:
 
    ```bash
+   # CLI (membuat database morphic_store otomatis)
    mysql -u root < database.sql
    ```
 
-   Perintah ini membuat database `morphic_store` beserta 5 kategori, 6 produk,
-   3 order, dan lisensinya.
+   atau lewat **phpMyAdmin** (<http://localhost/phpmyadmin>): buat database
+   `morphic_store`, pilih database itu, tab **Import**, pilih
+   `database_hosting.sql`, lalu **Go**.
+
+   Keduanya membuat 10 tabel beserta 5 kategori, 6 produk, 3 order, dan lisensinya.
 
 3. Sesuaikan koneksi database di `application/config/database.php`
-   (default: user `root`, password kosong — konfigurasi bawaan XAMPP).
-4. Sesuaikan `base_url` di `application/config/config.php` bila nama foldernya berbeda.
-5. Buka <http://localhost/BaseFullstackProject/>.
+   (default: user `root`, password kosong — konfigurasi bawaan XAMPP). Nilai ini
+   dapat ditimpa lewat environment variable `DB_HOST`, `DB_USER`, `DB_PASS`,
+   `DB_NAME`.
+4. `base_url` **tidak perlu diubah** — dideteksi otomatis dari domain/folder.
+   Untuk memaksa nilai tertentu, set `APP_BASE_URL` (lihat `DEPLOY.md`).
+5. Buka <http://localhost/MORPHIC/>.
 6. Opsional — isi data kunjungan demo agar grafik dashboard langsung berisi:
 
    ```bash
    php tools/seed_demo_traffic.php
    ```
+
+> **Mau online?** Panduan lengkap upload ke hosting cPanel + impor phpMyAdmin +
+> HTTPS + troubleshooting ada di [`DEPLOY.md`](DEPLOY.md).
 
 ### Akun contoh
 

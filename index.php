@@ -53,7 +53,20 @@
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+	/*
+	 * Any host other than localhost is treated as live: errors are hidden and
+	 * logged to application/logs/. Set CI_ENV explicitly (e.g. SetEnv CI_ENV
+	 * development) to force a specific environment.
+	 */
+	if (isset($_SERVER['CI_ENV']))
+	{
+		define('ENVIRONMENT', $_SERVER['CI_ENV']);
+	}
+	else
+	{
+		$ci_env_host = isset($_SERVER['HTTP_HOST']) ? strtolower(preg_replace('/:\d+$/', '', $_SERVER['HTTP_HOST'])) : '';
+		define('ENVIRONMENT', in_array($ci_env_host, array('localhost', '127.0.0.1', '[::1]', '::1'), TRUE) ? 'development' : 'production');
+	}
 
 /*
  *---------------------------------------------------------------

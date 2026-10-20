@@ -75,10 +75,14 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'morphic_store',
+	// Credentials can be supplied as environment variables so a hosting
+	// account never has to edit this file (see DEPLOY.md):
+	//   DB_HOST, DB_USER, DB_PASS, DB_NAME
+	// Anything left undefined falls back to the local XAMPP defaults.
+	'hostname' => (($db_host = getenv('DB_HOST')) !== FALSE && $db_host !== '') ? $db_host : 'localhost',
+	'username' => (($db_user = getenv('DB_USER')) !== FALSE && $db_user !== '') ? $db_user : 'root',
+	'password' => (($db_pass = getenv('DB_PASS')) !== FALSE) ? $db_pass : '',
+	'database' => (($db_name = getenv('DB_NAME')) !== FALSE && $db_name !== '') ? $db_name : 'morphic_store',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
